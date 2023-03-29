@@ -30,7 +30,7 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
+              "src/favicon.png",
               "src/assets",
               {
                 "glob": "**/*",
@@ -39,7 +39,9 @@
               }
             ],
             "styles": [
-              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css"
+              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+              "src/theme.less",
+              "src/styles.scss"
             ],
             "scripts": []
           },
