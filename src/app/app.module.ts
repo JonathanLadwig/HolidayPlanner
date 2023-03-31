@@ -12,11 +12,13 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCalendarModule } from 'ng-zorro-antd/calendar';
 import { NzFormModule } from 'ng-zorro-antd/form';
-import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
+import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -29,7 +31,8 @@ registerLocaleData(en);
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    DashboardComponent
+    DashboardComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -43,6 +46,7 @@ registerLocaleData(en);
     BrowserAnimationsModule,
     NzButtonModule,
     NzFormModule,
+    NzCalendarModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },
