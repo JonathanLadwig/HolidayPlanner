@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -8,10 +7,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  email = "";
+  password = "";
 
-  constructor(public fireAuth: AngularFireAuth, private router: Router) { }
+  constructor(public auth: AuthService) { }
 
   ngOnInit(): void {
   }
 
+  register() {
+    if (this.email && this.password) {
+      this.auth.register(this.email, this.password);
+      this.email = "";
+      this.password = "";
+    } else {
+      alert("Please enter both an email and password");
+    }
+  }
 }

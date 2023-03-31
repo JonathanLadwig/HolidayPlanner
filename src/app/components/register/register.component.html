@@ -1,1 +1,22 @@
-<p>register works!</p>
+<div class="bg-red-500">
+    <ng-form nz-form>
+        <nz-form-item>
+            <nz-form-label nzSpan="4">Email</nz-form-label>
+            <nz-form-control nzSpan="14">
+                <input type="email" nz-input [(ngModel)]="email" placeholder="Email" name="email input">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzSpan="4">Password</nz-form-label>
+            <nz-form-control nzSpan="14">
+                <input type="password" nz-input [(ngModel)]="password" placeholder="Password" name="password input">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <!-- <button nz-button nzType="primary" (click)="login()">Login</button> -->
+            <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'"
+                (click)="register()">Register</button>
+        </nz-form-item>
+        <!-- Change later to submit? -->
+    </ng-form>
+</div>

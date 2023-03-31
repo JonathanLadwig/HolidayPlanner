@@ -1,1 +1,26 @@
-<p>login works!</p>
+<div class="flex justify-center items-center w-screen h-screen">
+    <ng-form nz-form class="rounded-xl bg-slate-300 p-4">
+        <nz-form-item>
+            <nz-form-label nzSpan="4">Email</nz-form-label>
+            <nz-form-control nzSpan="14">
+                <input type="email" nz-input [(ngModel)]="email" placeholder="Email" name="email input">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzSpan="4">Password</nz-form-label>
+            <nz-form-control nzSpan="14">
+                <input type="password" nz-input [(ngModel)]="password" placeholder="Password" name="password input">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <!-- <button nz-button nzType="primary" (click)="login()">Login</button> -->
+            <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'"
+                (click)="login()">Login</button>
+        </nz-form-item>
+        <nz-form-item>
+            <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'"
+                (click)="createNewAccount()">Create New Account</button>
+        </nz-form-item>
+        <!-- Change later to submit? -->
+    </ng-form>
+</div>
