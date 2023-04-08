@@ -1,13 +1,14 @@
-export interface IUser{
-  uid: string;
-  email: string;
-  displayName?: string;
-  holidays?: IHoliday[];
+export interface IUser {
+    email: string;
+    displayName?: string;
+    holidays?: IHoliday[];
 }
 
 export interface IHoliday {
     id: string;
     name: string;
+    startDate: Date;
+    endDate: Date;
     description?: string;
     itinerary?: IActivity[];
 }
@@ -19,6 +20,8 @@ export interface IActivity {
     tag: string; //change to custom type later
     startDateTime: Date;
     endDateTime: Date;
+    cost?: number;
+    currency?: string;
     location?: ILatLong;
     endLocation?: ILatLong;
 }

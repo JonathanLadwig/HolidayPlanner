@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from "@ngrx/store";
-import { selectAllActivitiesByDate } from 'src/app/Ngrx-store/Ngrx-selectors/activity.selector';
 import { deleteActivity, loadActivities } from "../../Ngrx-store/Ngrx-actions/activity.actions";
 import { IActivity, IHoliday } from "../../models/Trip";
 
@@ -10,11 +10,29 @@ import { IActivity, IHoliday } from "../../models/Trip";
   styleUrls: ['./activity.component.scss']
 })
 export class ActivityComponent implements OnInit {
-  public allActivities$ = this.store.select(selectAllActivitiesByDate);
-  public activity: IActivity = {} as IActivity;
+  // public allActivities$: Observable<IActivity[]>;
+  public selectedActivity: IActivity = {} as IActivity;
   holiday: IHoliday = {} as IHoliday;
+  holidayID: string = '1';
 
-  constructor(private store: Store) { }
+  constructor(private store: Store, private router: Router) {
+    // this.allActivities$ = this.store.select((selector.selectAllActivitiesSortedByDate));
+    //Still need to implement this
+    // this.holiday = this.store.select(selectHolidayByID(this.holidayID));
+  }
+
+  selectActivity(activity: IActivity) {
+    this.selectedActivity = activity;
+  }
+
+  addNewActivity() {
+    //change this route
+    this.router.navigate(['activity', 'new']);
+  }
+
+  // editActivity(activity: IActivity) {
+  //   this.store.dispatch(editActivity({ idActivity: activity.id }));
+  // }
 
   removeActivity(activity: IActivity) {
     this.store.dispatch(deleteActivity({ idActivity: activity.id }));
@@ -24,3 +42,4 @@ export class ActivityComponent implements OnInit {
     this.store.dispatch(loadActivities());
   }
 }
+

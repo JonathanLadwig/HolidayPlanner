@@ -7,12 +7,17 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  constructor(public fireAuth: AngularFireAuth, public router: Router,) { }
+  constructor(public fireAuth: AngularFireAuth, public router: Router,) {
+  }
 
   login(email: string, password: string) {
     this.fireAuth.signInWithEmailAndPassword(email, password).
       then(() => {
+        this.fireAuth.currentUser.then(user => {
+          console.log("This user is logged in" + user?.metadata)
+        });
         this.router.navigate(['dashboard']);
+        console.log("Go to dashboard")
       }, error => {
         alert(error.message);
       })
@@ -21,7 +26,10 @@ export class AuthService {
   register(email: string, password: string) {
     this.fireAuth.createUserWithEmailAndPassword(email, password)
       .then(() => {
-        this.router.navigate(['dashboard']);
+        this.fireAuth.currentUser.then(user => {
+          console.log("This user is logged in" + user?.metadata)
+          this.router.navigate(['dashboard']);
+        });
       }, error => {
         alert(error.message);
       })

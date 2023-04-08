@@ -8,7 +8,6 @@ import { IActivity } from '../models/Trip';
   providedIn: 'root'
 })
 export class ActivityService {
-
   //connects to firestore or http for json data
   constructor(private afs: AngularFirestore, private http: HttpClient) { }
 
@@ -17,5 +16,9 @@ export class ActivityService {
     //I need to get data from firestore
     const activitiesByHoliday = this.afs.collection<IActivity>('activities', ref => ref.where('holidayId', '==', '1'));
     return activitiesByHoliday.valueChanges();
+  }
+
+  addActivity(newActivity: IActivity) {
+    throw new Error("Method not implemented.");
   }
 }
