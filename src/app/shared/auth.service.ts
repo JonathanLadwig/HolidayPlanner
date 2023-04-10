@@ -1,33 +1,42 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { setLoggedInUser } from '../Ngrx-store/Ngrx-actions/user.actions';
+import { AppState } from './app.state';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(public fireAuth: AngularFireAuth, public router: Router,) {
+  constructor(public fireAuth: AngularFireAuth, public router: Router, public store: Store<AppState>) {
   }
 
   login(email: string, password: string) {
     this.fireAuth.signInWithEmailAndPassword(email, password).
       then(() => {
         this.fireAuth.currentUser.then(user => {
-          console.log("This user is logged in" + user?.metadata)
+          //set user data in state and local storage
+          if (user?.email && user?.displayName) {
+            this.fireAuth.setPersistence('local');
+            this.store.dispatch(setLoggedInUser({
+              user: {
+                email: user.email, displayName: user.displayName
+              }
+            }));
+          }
         });
         this.router.navigate(['dashboard']);
-        console.log("Go to dashboard")
       }, error => {
         alert(error.message);
       })
   }
 
-  register(email: string, password: string) {
+  register(email: string, password: string, displayName: string) {
     this.fireAuth.createUserWithEmailAndPassword(email, password)
       .then(() => {
         this.fireAuth.currentUser.then(user => {
-          console.log("This user is logged in" + user?.metadata)
           this.router.navigate(['dashboard']);
         });
       }, error => {
@@ -36,8 +45,8 @@ export class AuthService {
   }
 
   logout() {
+    this.router.navigate(['login']);
     this.fireAuth.signOut();
-    this.router.navigate(['/login']);
   }
 
   googleAuth() {

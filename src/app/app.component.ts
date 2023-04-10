@@ -8,7 +8,8 @@ import { AuthService } from './shared/auth.service';
 })
 export class AppComponent {
 
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService) {
+  }
 
   logOut() {
     this.authService.logout();

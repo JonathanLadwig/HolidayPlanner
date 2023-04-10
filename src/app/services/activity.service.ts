@@ -8,17 +8,20 @@ import { IActivity } from '../models/Trip';
   providedIn: 'root'
 })
 export class ActivityService {
+
+  selectedHolidayID = '1';
+
   //connects to firestore or http for json data
   constructor(private afs: AngularFirestore, private http: HttpClient) { }
 
   //get all activities (can be changed)
   getActivities(): Observable<IActivity[]> {
     //I need to get data from firestore
-    const activitiesByHoliday = this.afs.collection<IActivity>('activities', ref => ref.where('holidayId', '==', '1'));
+    const activitiesByHoliday = this.afs.collection<IActivity>('activities', ref => ref.where('holidayId', '==', this.selectedHolidayID));
     return activitiesByHoliday.valueChanges();
   }
 
   addActivity(newActivity: IActivity) {
-    throw new Error("Method not implemented.");
+    this.afs.collection<IActivity>('activities').add(newActivity);
   }
 }

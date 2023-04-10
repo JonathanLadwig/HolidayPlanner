@@ -11,7 +11,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { StoreModule } from '@ngrx/store';
+import { ActionReducer, MetaReducer, StoreModule } from '@ngrx/store';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCalendarModule } from 'ng-zorro-antd/calendar';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
@@ -33,6 +33,21 @@ import { ActivityComponent } from './components/holiday-viewer/activity.componen
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthService } from './shared/auth.service';
+
+export const metaReducers: MetaReducer<any>[] = [debug];
+export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
+  return function (state, action) {
+    // if (
+    //   action.type == '[Trip] Get All Itinerary Items' ||
+    //   action.type == '[Trip] Get All Trips'
+    // ){
+    console.log(action.type, action);
+    console.log('current state', state)
+    console.log('future value of state', reducer(state, action));
+    // }
+    return reducer(state, action);
+  };
+}
 
 registerLocaleData(en);
 
@@ -67,7 +82,7 @@ registerLocaleData(en);
     NzInputNumberModule,
     NzInputModule,
     NzSelectModule,
-    StoreModule.forRoot({}, {})
+    StoreModule.forRoot({}, { metaReducers }),
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },

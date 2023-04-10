@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Store } from "@ngrx/store";
+import { Observable } from 'rxjs';
 import { addActivity } from 'src/app/Ngrx-store/Ngrx-actions/activity.actions';
+import { ActivityService } from 'src/app/services/activity.service';
 import { IActivity } from "../../models/Trip";
 
 @Component({
@@ -12,8 +15,13 @@ import { IActivity } from "../../models/Trip";
 export class CreateNewActivityFormComponent {
   validateForm!: UntypedFormGroup;
   tagOptions: string[] = ['Food', 'Hiking', 'Sightseeing', 'Shopping', 'Travel'];
+  private itemsCollection: AngularFirestoreCollection<IActivity>;
+  items: Observable<IActivity[]>;
 
-  constructor(private fb: UntypedFormBuilder, private store: Store) { }
+  constructor(private fb: UntypedFormBuilder, private store: Store, private readonly afs: AngularFirestore, private activityService: ActivityService) {
+    this.itemsCollection = afs.collection<IActivity>('activities');
+    this.items = this.itemsCollection.valueChanges({ idField: 'activityID' });
+  }
 
   submitForm(): void {
     //still need to do validation for the date to make sure you're not setting dates in the past
@@ -31,7 +39,7 @@ export class CreateNewActivityFormComponent {
       }
 
       const newActivity: IActivity = {
-        id: this.validateForm.value.activityName,
+        id: this.afs.createId(),
         name: this.validateForm.value.activityName,
         description: this.validateForm.value.activityDescription || '',
         cost: this.validateForm.value.totalCost,
@@ -66,5 +74,6 @@ export class CreateNewActivityFormComponent {
   }
   addNewActivity(activity: IActivity) {
     this.store.dispatch(addActivity({ newActivity: activity }));
+    this.activityService.addActivity(activity);
   }
 }

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanActivate, Router } from '@angular/router';
 import { AuthService } from '../shared/auth.service';
 
 @Injectable({
@@ -9,20 +8,21 @@ import { AuthService } from '../shared/auth.service';
 })
 export class AuthGuard implements CanActivate {
 
+  loggedIn: boolean = false;
+
   constructor(public authService: AuthService, public router: Router, public fireAuth: AngularFireAuth) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    let loggedIn = true;
-    //the code inside runs but the loggedIn variable is not updated
-    this.authService.fireAuth.onAuthStateChanged(user => {
-      console.log("Auth state changed!")
-      console.log(user)
-      if (!user) {
-        console.log("Not logged in!")
-        loggedIn = false;
+  async canActivate(): Promise<boolean> {
+    await this.authService.fireAuth.currentUser.then(user => {
+      if (user) {
+        this.loggedIn = true;
       }
-    });
-    return loggedIn;
+      else {
+        this.router.navigate(['login']);
+      }
+    }
+    );
+    return this.loggedIn;
   }
 
 }
