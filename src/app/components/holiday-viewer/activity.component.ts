@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { Store } from "@ngrx/store";
 import { Observable } from 'rxjs';
+import { selectAllActivitiesSortedByDate } from 'src/app/Ngrx-store/Ngrx-selectors/activity.selector';
 import { AppState } from 'src/app/shared/app.state';
 import { deleteActivity, loadActivities } from "../../Ngrx-store/Ngrx-actions/activity.actions";
-import { selectAllActivitiesSortedByDate } from '../../Ngrx-store/Ngrx-selectors/activity.selector';
 import { IActivity, IHoliday } from "../../models/Trip";
 
 
@@ -14,12 +15,12 @@ import { IActivity, IHoliday } from "../../models/Trip";
   styleUrls: ['./activity.component.scss']
 })
 export class ActivityComponent implements OnInit {
-  public allActivities$: Observable<IActivity[]>;
+  public allActivities$: Observable<IActivity[]> | undefined;
   public selectedActivity: IActivity = {} as IActivity;
   holiday: IHoliday = {} as IHoliday;
   holidayID: string = '1';
 
-  constructor(private store: Store<AppState>, private router: Router) {
+  constructor(private store: Store<AppState>, private router: Router, private afs: AngularFirestore) {
     this.allActivities$ = this.store.select(selectAllActivitiesSortedByDate);
     //Still need to implement this
     // this.holiday = this.store.select(selectHolidayByID(this.holidayID));
@@ -43,6 +44,7 @@ export class ActivityComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(loadActivities());
+    // this.allActivities$ = this.afs.collection<IActivity>('activities').valueChanges();
   }
 }
 

@@ -1,4 +1,4 @@
-import {Action, createAction, props} from "@ngrx/store";
+import { createAction, props } from "@ngrx/store";
 import { IActivity } from "src/app/models/Trip";
 
 export const addActivity = createAction(
@@ -15,7 +15,7 @@ export const loadActivities = createAction('[Activities] Load Activities');
 
 export const loadActivitiesSuccess = createAction(
   '[Activities] Load Activities Success',
-  props<{ activities: IActivity[] }>()
+  props<{ activities: IActivity[] }>(),
 );
 
 export const loadActivitiesFailure = createAction(

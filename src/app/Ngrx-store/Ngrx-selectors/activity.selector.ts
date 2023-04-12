@@ -8,7 +8,7 @@ export const selectActivities = (state: AppState) => state.activities;
 export const selectAllActivitiesSortedByDate = createSelector(
   selectActivities,
   (state: ActivityState) => state.activities
-  // .sort((a, b) => b.startDateTime.getDate() - a.startDateTime.getDate() || b.startDateTime.getTime() - a.startDateTime.getTime())
+    .sort((a, b) => b.startDateTime.getDate() - a.startDateTime.getDate() || b.startDateTime.getTime() - a.startDateTime.getTime())
 )
 //gets one specific activity from the state by its id
 export const selectSpecificActivity = (activityID: string) => createSelector(

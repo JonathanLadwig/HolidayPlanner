@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IActivity } from 'src/app/models/Trip';
 
 @Component({
@@ -7,7 +7,6 @@ import { IActivity } from 'src/app/models/Trip';
   styleUrls: ['./activity-card.component.scss']
 })
 export class ActivityCardComponent {
-  activity: IActivity | undefined;
+  @Input() activity: IActivity | undefined;
   constructor() { }
-
 }

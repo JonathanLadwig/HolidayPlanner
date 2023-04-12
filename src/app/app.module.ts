@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { registerLocaleData } from '@angular/common';
@@ -7,11 +7,14 @@ import en from '@angular/common/locales/en';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireAuthModule, PERSISTENCE } from '@angular/fire/compat/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EffectsModule } from '@ngrx/effects';
 import { ActionReducer, MetaReducer, StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCalendarModule } from 'ng-zorro-antd/calendar';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
@@ -23,6 +26,8 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { environment } from '../environments/environment';
+import { HolidayEffects } from './Ngrx-store/Ngrx-effects/holiday.effects';
+import * as fromHoliday from './Ngrx-store/Ngrx-reducers/holiday.reducer';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ActivityCardComponent } from './components/activity-card/activity-card.component';
@@ -80,13 +85,18 @@ registerLocaleData(en);
     NzDatePickerModule,
     NzTimePickerModule,
     NzInputNumberModule,
+    NzBadgeModule,
     NzInputModule,
     NzSelectModule,
     StoreModule.forRoot({}, { metaReducers }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    StoreModule.forFeature(fromHoliday.holidayFeatureKey, fromHoliday.reducer),
+    EffectsModule.forFeature([HolidayEffects]),
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },
-    AuthService, { provide: FIREBASE_OPTIONS, useValue: environment.firebase }
+    AuthService, { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
+    { provide: PERSISTENCE, useValue: 'local' }
   ],
   bootstrap: [AppComponent]
 })

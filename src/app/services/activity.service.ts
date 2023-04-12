@@ -14,14 +14,18 @@ export class ActivityService {
   //connects to firestore or http for json data
   constructor(private afs: AngularFirestore, private http: HttpClient) { }
 
-  //get all activities (can be changed)
+  //get all activities (needs to be changed to only pull from a specific holiday)
   getActivities(): Observable<IActivity[]> {
-    //I need to get data from firestore
-    const activitiesByHoliday = this.afs.collection<IActivity>('activities', ref => ref.where('holidayId', '==', this.selectedHolidayID));
+    const activitiesByHoliday = this.afs.collection<IActivity>('activities');
     return activitiesByHoliday.valueChanges();
   }
 
   addActivity(newActivity: IActivity) {
-    this.afs.collection<IActivity>('activities').add(newActivity);
+    try {
+      const activitiesCollection = this.afs.collection<IActivity>('activities');
+      activitiesCollection.add({ ...newActivity });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

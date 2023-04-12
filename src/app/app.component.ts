@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from './shared/auth.service';
 @Component({
   selector: 'app-root',
@@ -8,7 +9,10 @@ import { AuthService } from './shared/auth.service';
 })
 export class AppComponent {
 
-  constructor(public authService: AuthService) {
+  constructor(public authService: AuthService, private router: Router) {
+  }
+  goHome() {
+    this.router.navigate(['dashboard']);
   }
 
   logOut() {

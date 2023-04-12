@@ -19,6 +19,7 @@ export class AuthService {
         this.fireAuth.currentUser.then(user => {
           //set user data in state and local storage
           if (user?.email && user?.displayName) {
+            //set local persistence
             this.fireAuth.setPersistence('local');
             this.store.dispatch(setLoggedInUser({
               user: {

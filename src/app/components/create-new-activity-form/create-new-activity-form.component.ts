@@ -4,7 +4,9 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { Store } from "@ngrx/store";
 import { Observable } from 'rxjs';
 import { addActivity } from 'src/app/Ngrx-store/Ngrx-actions/activity.actions';
+import { selectAllActivitiesSortedByDate } from 'src/app/Ngrx-store/Ngrx-selectors/activity.selector';
 import { ActivityService } from 'src/app/services/activity.service';
+import { AppState } from 'src/app/shared/app.state';
 import { IActivity } from "../../models/Trip";
 
 @Component({
@@ -13,12 +15,13 @@ import { IActivity } from "../../models/Trip";
   styleUrls: ['./create-new-activity-form.component.scss']
 })
 export class CreateNewActivityFormComponent {
+  holidayID = '1';
   validateForm!: UntypedFormGroup;
   tagOptions: string[] = ['Food', 'Hiking', 'Sightseeing', 'Shopping', 'Travel'];
   private itemsCollection: AngularFirestoreCollection<IActivity>;
   items: Observable<IActivity[]>;
 
-  constructor(private fb: UntypedFormBuilder, private store: Store, private readonly afs: AngularFirestore, private activityService: ActivityService) {
+  constructor(private fb: UntypedFormBuilder, private store: Store<AppState>, private readonly afs: AngularFirestore, private activityService: ActivityService) {
     this.itemsCollection = afs.collection<IActivity>('activities');
     this.items = this.itemsCollection.valueChanges({ idField: 'activityID' });
   }
@@ -61,7 +64,7 @@ export class CreateNewActivityFormComponent {
   }
 
   ngOnInit(): void {
-    // console.log(this.store.select(selectAllActivitiesByDate));
+    console.log(this.store.select(selectAllActivitiesSortedByDate));
     this.validateForm = this.fb.group({
       activityName: [null, Validators.required],
       activityDescription: [null],
@@ -73,7 +76,9 @@ export class CreateNewActivityFormComponent {
     });
   }
   addNewActivity(activity: IActivity) {
+    this.validateForm.reset();
     this.store.dispatch(addActivity({ newActivity: activity }));
     this.activityService.addActivity(activity);
   }
 }
+
