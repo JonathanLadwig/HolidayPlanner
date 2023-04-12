@@ -1,4 +1,5 @@
 export interface IUser {
+    // uid: string;
     email: string;
     displayName?: string;
     holidays?: IHoliday[];
@@ -6,6 +7,7 @@ export interface IUser {
 
 export interface IHoliday {
     id: string;
+    fkUserID: string;
     name: string;
     startDate: Date;
     endDate: Date;
@@ -15,9 +17,10 @@ export interface IHoliday {
 
 export interface IActivity {
     id: string;
+    // kfHolidayID: string;
     name: string;
     description?: string;
-    tag: string; //change to custom type later
+    tag: string; //change to custom type later?
     startDateTime: Date;
     endDateTime: Date;
     cost?: number;

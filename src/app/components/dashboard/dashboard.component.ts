@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IHoliday } from 'src/app/models/Trip';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,5 +8,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
+  public allHolidays$: Observable<IHoliday[]> | undefined;
 
+  constructor() { }
 }

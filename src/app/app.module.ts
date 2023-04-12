@@ -24,6 +24,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { environment } from '../environments/environment';
 import { HolidayEffects } from './Ngrx-store/Ngrx-effects/holiday.effects';
@@ -34,8 +35,10 @@ import { ActivityCardComponent } from './components/activity-card/activity-card.
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { CreateNewActivityFormComponent } from './components/create-new-activity-form/create-new-activity-form.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { HolidayTabComponent } from './components/holiday-tab/holiday-tab.component';
 import { ActivityComponent } from './components/holiday-viewer/activity.component';
 import { LoginComponent } from './components/login/login.component';
+import { NewHolidayTabComponent } from './components/new-holiday-tab/new-holiday-tab.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthService } from './shared/auth.service';
 
@@ -65,7 +68,9 @@ registerLocaleData(en);
     CalendarComponent,
     CreateNewActivityFormComponent,
     ActivityCardComponent,
-    ActivityComponent
+    ActivityComponent,
+    NewHolidayTabComponent,
+    HolidayTabComponent
   ],
   imports: [
     BrowserModule,
@@ -88,6 +93,8 @@ registerLocaleData(en);
     NzBadgeModule,
     NzInputModule,
     NzSelectModule,
+    NzTabsModule,
+    EffectsModule.forRoot([]),
     StoreModule.forRoot({}, { metaReducers }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     StoreModule.forFeature(fromHoliday.holidayFeatureKey, fromHoliday.reducer),
