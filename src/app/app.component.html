@@ -1,5 +1,7 @@
 <nav class="flex justify-between">Nav
-    <button (click)="goHome()">Home</button>
+    <button (click)="goToDashboard()">Home</button>
+    <button (click)="goToCalendar()"></button>
+    <h2>Welcome {{displayName}}</h2>
     <button (click)="logOut()">Logout</button>
 </nav>
 <router-outlet></router-outlet>

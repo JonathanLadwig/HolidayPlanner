@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { AuthService } from './shared/auth.service';
 @Component({
@@ -8,11 +9,19 @@ import { AuthService } from './shared/auth.service';
   providers: []
 })
 export class AppComponent {
+  displayName: string = '';
 
-  constructor(public authService: AuthService, private router: Router) {
+  constructor(public authService: AuthService, private router: Router, private afa: AngularFireAuth) {
+    this.afa.currentUser.then((user) => {
+      this.displayName = user?.displayName || '';
+    });
   }
-  goHome() {
+  goToDashboard() {
     this.router.navigate(['dashboard']);
+  }
+
+  goToCalendar() {
+    this.router.navigate(['calendar']);
   }
 
   logOut() {

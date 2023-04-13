@@ -1,3 +1,22 @@
-<ng-form>
-
-</ng-form>
+<form nz-form [formGroup]="validateHolidayForm" (ngSubmit)="submitForm()">
+    <!-- Name -->
+    <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Holiday-Name</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">
+            <input style="width: 12rem;" nz-input formControlName="holidayName" />
+        </nz-form-control>
+    </nz-form-item>
+    <!-- Description -->
+    <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24">Holiday-Description</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">
+            <textarea style="width: 12rem;" nz-input formControlName="holidayDescription"></textarea>
+        </nz-form-control>
+    </nz-form-item>
+    <!-- Submit -->
+    <nz-form-item>
+        <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 16, offset: 8 }">
+            <button nz-button nzType="primary">Submit</button>
+        </nz-form-control>
+    </nz-form-item>
+</form>

@@ -18,7 +18,8 @@ export class LoginComponent implements OnInit {
   constructor(public auth: AuthService, public router: Router) { }
 
   ngOnInit(): void {
-    this.auth.fireAuth.currentUser.then(user => {
+    //fire if user is already logged in to send to dashboard automatically
+    this.auth.fireAuth.onAuthStateChanged(user => {
       if (user) {
         this.router.navigate(['dashboard']);
       }
@@ -41,4 +42,11 @@ export class LoginComponent implements OnInit {
   }
 }
 
-
+    // this.auth.fireAuth.currentUser.then(user => {
+    //   console.log("firing now")
+    //   if (!user) {
+    //     console.log("already logged in");
+    //     this.router.navigate(['dashboard']);
+    //   }
+    // }
+    // );

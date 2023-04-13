@@ -37,7 +37,12 @@ export class AuthService {
   register(email: string, password: string, displayName: string) {
     this.fireAuth.createUserWithEmailAndPassword(email, password)
       .then(() => {
+
         this.fireAuth.currentUser.then(user => {
+          user?.updateProfile({
+            displayName: displayName
+          });
+          this.fireAuth.setPersistence('local');
           this.router.navigate(['dashboard']);
         });
       }, error => {

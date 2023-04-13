@@ -27,7 +27,9 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { environment } from '../environments/environment';
+import { ActivityEffects } from './Ngrx-store/Ngrx-effects/activity.effects';
 import { HolidayEffects } from './Ngrx-store/Ngrx-effects/holiday.effects';
+import * as fromActivity from './Ngrx-store/Ngrx-reducers/activity.reducer';
 import * as fromHoliday from './Ngrx-store/Ngrx-reducers/holiday.reducer';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -98,7 +100,8 @@ registerLocaleData(en);
     StoreModule.forRoot({}, { metaReducers }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     StoreModule.forFeature(fromHoliday.holidayFeatureKey, fromHoliday.reducer),
-    EffectsModule.forFeature([HolidayEffects]),
+    StoreModule.forFeature(fromActivity.activityFeatureKey, fromActivity.reducer),
+    EffectsModule.forFeature([HolidayEffects, ActivityEffects]),
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },

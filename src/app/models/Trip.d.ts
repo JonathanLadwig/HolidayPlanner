@@ -9,15 +9,12 @@ export interface IHoliday {
     id: string;
     fkUserID: string;
     name: string;
-    startDate: Date;
-    endDate: Date;
     description?: string;
-    itinerary?: IActivity[];
+    itinerary: IActivity[];
 }
 
 export interface IActivity {
     id: string;
-    // kfHolidayID: string;
     name: string;
     description?: string;
     tag: string; //change to custom type later?

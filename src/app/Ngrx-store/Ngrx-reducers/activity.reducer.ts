@@ -8,6 +8,8 @@ import {
   loadActivitiesSuccess
 } from "../Ngrx-actions/activity.actions";
 
+export const activityFeatureKey = 'activity';
+
 export interface ActivityState {
   activities: IActivity[];
   errorMessage: string;

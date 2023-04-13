@@ -9,6 +9,7 @@ import { IActivity } from '../models/Trip';
 })
 export class ActivityService {
 
+  //get selectedHolidayID from holiday state
   selectedHolidayID = '1';
 
   //connects to firestore or http for json data

@@ -1,6 +1,4 @@
 <div>
-    <h2>{{holiday.name}}</h2>
-    <p>{{holiday.description}}</p>
     <div *ngFor="let activity of allActivities$| async" class="activity">
         <app-activity-card [activity]="activity" />
     </div>

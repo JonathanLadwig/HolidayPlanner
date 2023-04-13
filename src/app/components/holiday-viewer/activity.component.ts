@@ -21,9 +21,7 @@ export class ActivityComponent implements OnInit {
   holidayID: string = '1';
 
   constructor(private store: Store<AppState>, private router: Router, private afs: AngularFirestore) {
-    this.allActivities$ = this.store.select(selectAllActivitiesSortedByDate);
-    //Still need to implement this
-    // this.holiday = this.store.select(selectHolidayByID(this.holidayID));
+    // this.allActivities$ = this.store.select(selectAllActivitiesSortedByDate);
   }
 
   selectActivity(activity: IActivity) {
@@ -44,6 +42,7 @@ export class ActivityComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(loadActivities());
+    this.allActivities$ = this.store.select(selectAllActivitiesSortedByDate);
     // this.allActivities$ = this.afs.collection<IActivity>('activities').valueChanges();
   }
 }

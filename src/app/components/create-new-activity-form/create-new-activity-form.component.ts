@@ -4,7 +4,6 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { Store } from "@ngrx/store";
 import { Observable } from 'rxjs';
 import { addActivity } from 'src/app/Ngrx-store/Ngrx-actions/activity.actions';
-import { selectAllActivitiesSortedByDate } from 'src/app/Ngrx-store/Ngrx-selectors/activity.selector';
 import { ActivityService } from 'src/app/services/activity.service';
 import { AppState } from 'src/app/shared/app.state';
 import { IActivity } from "../../models/Trip";
@@ -18,12 +17,12 @@ export class CreateNewActivityFormComponent {
   holidayID = '1';
   validateForm!: UntypedFormGroup;
   tagOptions: string[] = ['Food', 'Hiking', 'Sightseeing', 'Shopping', 'Travel'];
-  private itemsCollection: AngularFirestoreCollection<IActivity>;
-  items: Observable<IActivity[]>;
+  private activitiesCollection: AngularFirestoreCollection<IActivity>;
+  activities: Observable<IActivity[]>;
 
   constructor(private fb: UntypedFormBuilder, private store: Store<AppState>, private readonly afs: AngularFirestore, private activityService: ActivityService) {
-    this.itemsCollection = afs.collection<IActivity>('activities');
-    this.items = this.itemsCollection.valueChanges({ idField: 'activityID' });
+    this.activitiesCollection = afs.collection<IActivity>('activities');
+    this.activities = this.activitiesCollection.valueChanges({ idField: 'activityID' });
   }
 
   submitForm(): void {
@@ -64,7 +63,6 @@ export class CreateNewActivityFormComponent {
   }
 
   ngOnInit(): void {
-    console.log(this.store.select(selectAllActivitiesSortedByDate));
     this.validateForm = this.fb.group({
       activityName: [null, Validators.required],
       activityDescription: [null],
@@ -75,6 +73,8 @@ export class CreateNewActivityFormComponent {
       totalCost: [0]
     });
   }
+
+  //should be done via effects in the store
   addNewActivity(activity: IActivity) {
     this.validateForm.reset();
     this.store.dispatch(addActivity({ newActivity: activity }));

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { IHoliday } from 'src/app/models/Trip';
 
 @Component({
   selector: 'app-holiday-tab',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./holiday-tab.component.scss']
 })
 export class HolidayTabComponent {
-
+  @Input() holiday: IHoliday | undefined;
 }
