@@ -11,6 +11,11 @@ export const deleteActivity = createAction(
   props<{ idActivity: string }>()
 );
 
+export const loadActivitiesByHolidayID = createAction(
+  '[Activities] Load Activities By Holiday ID',
+  props<{ idHoliday: string }>()
+);
+
 export const loadActivities = createAction('[Activities] Load Activities');
 
 export const loadActivitiesSuccess = createAction(

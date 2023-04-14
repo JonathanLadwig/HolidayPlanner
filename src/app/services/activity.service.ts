@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { Observable } from "rxjs";
-import { IActivity } from '../models/Trip';
+import { IActivity, IHoliday } from '../models/Trip';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +21,11 @@ export class ActivityService {
     return activitiesByHoliday.valueChanges();
   }
 
+  getActivitiesByHolidayID(holidayID: string): Observable<IActivity[]> {
+    const activitiesByHoliday = this.afs.collection<IActivity>('activities', ref => ref.where('fkHolidayID', '==', holidayID));
+    return activitiesByHoliday.valueChanges();
+  }
+
   addActivity(newActivity: IActivity) {
     try {
       const activitiesCollection = this.afs.collection<IActivity>('activities');
@@ -28,5 +33,9 @@ export class ActivityService {
     } catch (error) {
       console.log(error);
     }
+
+    const holidaysCollection = this.afs.collection<IHoliday>('holidays');
+    const holidayDoc = holidaysCollection.doc(this.selectedHolidayID);
+    //add activity to holiday itinerary
   }
 }

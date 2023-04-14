@@ -1,27 +1,25 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
 import { IHoliday } from '../models/Trip';
+import { AuthService } from '../shared/auth.service';
+import { AuthGuard } from './auth.guard';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HolidayService {
-  currentUserID: string | undefined;
 
-  constructor(private afa: AngularFireAuth, private afs: AngularFirestore) {
-    this.afa.currentUser.then((user) => {
-      this.currentUserID = user?.uid;
-    });
-  }
+  constructor(private afa: AngularFireAuth, private afs: AngularFirestore, private authService: AuthService, private guard: AuthGuard) { }
 
-  getHolidays() {
-    //get holidays from firestore
-    if (!this.currentUserID) {
-      return;
-    }
-    const holidaysByUser = this.afs.collection('holidays', ref => ref.where('fkUserID', '==', this.currentUserID));
-    return holidaysByUser.valueChanges({ idField: 'holidayID' });
+  getHolidays(): Observable<IHoliday[]> {
+    const currentUserID = this.guard.getCurrentUserID();
+    const holidaysByUser = this.afs.collection<IHoliday>('holidays', (ref) =>
+      ref.where('fkUserID', '==', currentUserID),
+    );
+    console.log('GetHolidaysUserID', currentUserID);
+    return holidaysByUser.valueChanges();
   }
 
   addHoliday(holiday: IHoliday) {

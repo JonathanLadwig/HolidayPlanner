@@ -9,6 +9,8 @@ import * as ActivityActions from "../Ngrx-actions/activity.actions";
 @Injectable()
 export class ActivityEffects {
 
+  constructor(private actions$: Actions, private activityService: ActivityService) { }
+
   loadActivities$ =
     createEffect(
       () =>
@@ -29,6 +31,25 @@ export class ActivityEffects {
           )//end of concat map
         )//end of action obs watcher
     )//end of create effect
-  constructor(private actions$: Actions, private activityService: ActivityService) {
-  }
+
+  loadActivitiesByHolidayID$ =
+    createEffect(
+      () =>
+        this.actions$.pipe(
+          ofType(ActivityActions.loadActivitiesByHolidayID),
+          switchMap(
+            (action) =>
+              this.activityService.getActivitiesByHolidayID(action.idHoliday).pipe(
+                tap((activities) => console.log(activities)),
+                map((activities: IActivity[]) => ActivityActions.loadActivitiesSuccess({ activities })),//end of map
+                catchError(error => {
+                  //this is where I'm going to fire off cool ng-zorro alert thingy from the service
+                  console.log("Hi, yeah we have problems...")
+                  return of(ActivityActions.loadActivitiesFailure({ error }))
+                }
+                )//end of catch error
+              )//end of holiday-viewer service pipe
+          )//end of concat map
+        )//end of action obs watcher
+    )//end of create effect
 }

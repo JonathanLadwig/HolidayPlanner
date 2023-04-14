@@ -32,4 +32,3 @@ export const selectSpecificActivity = (activityID: string) => createSelector(
   selectActivityState,
   (state: ActivityState) => state.activities.find(activity => activity.id === activityID)
 )
-// new Date(b.startDateTime).getDate() - new Date(a.startDateTime).getDate()

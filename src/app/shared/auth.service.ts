@@ -55,8 +55,4 @@ export class AuthService {
     this.fireAuth.signOut();
   }
 
-  googleAuth() {
-    return
-  }
-
 }

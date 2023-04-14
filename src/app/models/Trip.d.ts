@@ -2,7 +2,6 @@ export interface IUser {
     uid: string;
     email: string;
     displayName?: string;
-    holidays?: IHoliday[];
 }
 
 export interface IHoliday {
@@ -10,11 +9,11 @@ export interface IHoliday {
     fkUserID: string;
     name: string;
     description?: string;
-    itinerary: IActivity[];
 }
 
 export interface IActivity {
     id: string;
+    fkHolidayID: string;
     name: string;
     description?: string;
     tag: string; //change to custom type later?

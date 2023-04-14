@@ -6,32 +6,36 @@ export const holidayFeatureKey = 'holiday';
 
 export interface HolidayState {
   holidays: IHoliday[];
+  selectedHolidayID: string;
   errorMessage: string;
   status: 'success' | 'error' | 'idle' | 'loading';
 }
 
 export const initialState: HolidayState = {
   holidays: [],
+  selectedHolidayID: '',
   errorMessage: '',
   status: 'idle',
 };
 
 export const reducer = createReducer(
   initialState,
-  // on(HolidayActions.loadHolidays, state => state),
-  // on(HolidayActions.loadHolidaysSuccess, (state, action) => state),
-  // on(HolidayActions.loadHolidaysFailure, (state, action) => state),
-
+  on(HolidayActions.setSelectedHolidayID, (state, { idHoliday }) => {
+    return {
+      ...state,
+      selectedHolidayID: idHoliday
+    }
+  }),
   on(HolidayActions.addHoliday, (state, { newHoliday }) => {
     return {
       ...state,
-      activities: [...state.holidays, newHoliday]
+      holidays: [...state.holidays, newHoliday]
     }
   }),
   on(HolidayActions.deleteHoliday, (state, { idHoliday }) => {
     return {
       ...state,
-      activities: state.holidays.filter(holiday => holiday.id !== idHoliday)
+      holidays: state.holidays.filter(holiday => holiday.id !== idHoliday)
     }
   }),
   on(HolidayActions.loadHolidays, state => ({ ...state, status: 'loading' })),

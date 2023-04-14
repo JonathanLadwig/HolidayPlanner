@@ -9,6 +9,7 @@ import { AuthService } from '../shared/auth.service';
 export class AuthGuard implements CanActivate {
 
   loggedIn: boolean = false;
+  userID: string = "";
 
   constructor(public authService: AuthService, public router: Router, public fireAuth: AngularFireAuth) { }
 
@@ -16,13 +17,20 @@ export class AuthGuard implements CanActivate {
     await this.authService.fireAuth.currentUser.then(user => {
       if (user) {
         this.loggedIn = true;
+        this.userID = user.uid;
       }
       else {
         this.router.navigate(['login']);
+        this.loggedIn = false;
+        this.userID = "";
       }
     }
     );
     return this.loggedIn;
+  }
+
+  getCurrentUserID(): string {
+    return this.userID;
   }
 
 }

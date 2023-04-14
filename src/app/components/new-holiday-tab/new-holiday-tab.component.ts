@@ -45,10 +45,8 @@ export class NewHolidayTabComponent implements OnInit {
         fkUserID: this.userID,
         name: this.validateHolidayForm.value.holidayName,
         description: this.validateHolidayForm.value.holidayDescription || '',
-        itinerary: []
       }
-      this.store.dispatch(addHoliday({ newHoliday }))
-      //do this with side effects later
+      this.store.dispatch(addHoliday({ newHoliday }));
       this.holidayService.addHoliday(newHoliday);
     }
   }

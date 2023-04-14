@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Store } from "@ngrx/store";
-import { Observable } from 'rxjs';
 import { addActivity } from 'src/app/Ngrx-store/Ngrx-actions/activity.actions';
+import { getSelectedHolidayID } from 'src/app/Ngrx-store/Ngrx-selectors/holiday.selectors';
 import { ActivityService } from 'src/app/services/activity.service';
 import { AppState } from 'src/app/shared/app.state';
 import { IActivity } from "../../models/Trip";
@@ -14,15 +14,13 @@ import { IActivity } from "../../models/Trip";
   styleUrls: ['./create-new-activity-form.component.scss']
 })
 export class CreateNewActivityFormComponent {
-  holidayID = '1';
+  holidayID$ = this.store.select(getSelectedHolidayID);
+  holidayID: string = '';
   validateForm!: UntypedFormGroup;
-  tagOptions: string[] = ['Food', 'Hiking', 'Sightseeing', 'Shopping', 'Travel'];
-  private activitiesCollection: AngularFirestoreCollection<IActivity>;
-  activities: Observable<IActivity[]>;
+  tagOptions: string[] = ['Food', 'Hiking', 'Sightseeing', 'Shopping', 'Travel', 'Other'];
 
   constructor(private fb: UntypedFormBuilder, private store: Store<AppState>, private readonly afs: AngularFirestore, private activityService: ActivityService) {
-    this.activitiesCollection = afs.collection<IActivity>('activities');
-    this.activities = this.activitiesCollection.valueChanges({ idField: 'activityID' });
+    this.holidayID$.subscribe(id => console.log(id));
   }
 
   submitForm(): void {
@@ -42,6 +40,7 @@ export class CreateNewActivityFormComponent {
 
       const newActivity: IActivity = {
         id: this.afs.createId(),
+        fkHolidayID: this.holidayID,
         name: this.validateForm.value.activityName,
         description: this.validateForm.value.activityDescription || '',
         cost: this.validateForm.value.totalCost,
@@ -49,7 +48,6 @@ export class CreateNewActivityFormComponent {
         startDateTime: activityStartDateTime,
         endDateTime: activityEndDateTime
       }
-      console.log(newActivity);
       this.addNewActivity(newActivity);
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
@@ -79,6 +77,7 @@ export class CreateNewActivityFormComponent {
     this.validateForm.reset();
     this.store.dispatch(addActivity({ newActivity: activity }));
     this.activityService.addActivity(activity);
+    //popup message
   }
 }
 

@@ -4,6 +4,7 @@ import {
   addActivity,
   deleteActivity,
   loadActivities,
+  loadActivitiesByHolidayID,
   loadActivitiesFailure,
   loadActivitiesSuccess
 } from "../Ngrx-actions/activity.actions";
@@ -37,6 +38,8 @@ export const reducer = createReducer(
       activities: state.activities.filter(activity => activity.id !== idActivity)
     }
   }),
+  //Load activities by holiday id case
+  on(loadActivitiesByHolidayID, state => ({ ...state, status: 'loading' })),
   //Load activities case
   on(loadActivities, state => ({ ...state, status: 'loading' })),
   //Load activities success case
