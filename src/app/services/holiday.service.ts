@@ -11,6 +11,8 @@ import { AuthGuard } from './auth.guard';
 })
 export class HolidayService {
 
+  selectedHolidayID: string = '';
+
   constructor(private afa: AngularFireAuth, private afs: AngularFirestore, private authService: AuthService, private guard: AuthGuard) { }
 
   getHolidays(): Observable<IHoliday[]> {
@@ -20,6 +22,14 @@ export class HolidayService {
     );
     console.log('GetHolidaysUserID', currentUserID);
     return holidaysByUser.valueChanges();
+  }
+
+  setSelectedHoliday(holidayID: string) {
+    this.selectedHolidayID = holidayID;
+  }
+
+  getSelectedHolidayID(): string {
+    return this.selectedHolidayID;
   }
 
   addHoliday(holiday: IHoliday) {

@@ -3,8 +3,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Store } from "@ngrx/store";
 import { addActivity } from 'src/app/Ngrx-store/Ngrx-actions/activity.actions';
-import { getSelectedHolidayID } from 'src/app/Ngrx-store/Ngrx-selectors/holiday.selectors';
 import { ActivityService } from 'src/app/services/activity.service';
+import { HolidayService } from 'src/app/services/holiday.service';
 import { AppState } from 'src/app/shared/app.state';
 import { IActivity } from "../../models/Trip";
 
@@ -14,13 +14,13 @@ import { IActivity } from "../../models/Trip";
   styleUrls: ['./create-new-activity-form.component.scss']
 })
 export class CreateNewActivityFormComponent {
-  holidayID$ = this.store.select(getSelectedHolidayID);
-  holidayID: string = '';
+  // holidayID$ = this.store.select(getSelectedHolidayID);
+  holidayID: string = this.holidayService.getSelectedHolidayID();
   validateForm!: UntypedFormGroup;
   tagOptions: string[] = ['Food', 'Hiking', 'Sightseeing', 'Shopping', 'Travel', 'Other'];
 
-  constructor(private fb: UntypedFormBuilder, private store: Store<AppState>, private readonly afs: AngularFirestore, private activityService: ActivityService) {
-    this.holidayID$.subscribe(id => console.log(id));
+  constructor(private fb: UntypedFormBuilder, private store: Store<AppState>, private readonly afs: AngularFirestore, private activityService: ActivityService, private holidayService: HolidayService) {
+    // this.holidayID$.subscribe(id => console.log(id));
   }
 
   submitForm(): void {
@@ -70,6 +70,7 @@ export class CreateNewActivityFormComponent {
       endTimePicker: [null, Validators.required],
       totalCost: [0]
     });
+    console.log("SelectedHolidayID", this.holidayID);
   }
 
   //should be done via effects in the store
