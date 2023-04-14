@@ -35,4 +35,23 @@ export class HolidayService {
   addHoliday(holiday: IHoliday) {
     this.afs.collection('holidays').add(holiday);
   }
+
+  removeHoliday(holidayID: string) {
+    //get the holiday doc id from the holidayID
+    const holidayToDeleteDoc = this.afs.collection('holidays', ref => ref.where('id', '==', holidayID));
+    holidayToDeleteDoc.get().subscribe((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        doc.ref.delete();
+      })
+    }
+    )
+    //delete all activities with the holidayID
+    const activitiesToDeleteDoc = this.afs.collection('activities', ref => ref.where('fkHolidayID', '==', holidayID));
+    activitiesToDeleteDoc.get().subscribe((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        doc.ref.delete();
+      })
+    }
+    )
+  }
 }
