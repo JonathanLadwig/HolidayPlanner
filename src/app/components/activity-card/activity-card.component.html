@@ -1,6 +1,7 @@
-<button class="activityCard w-1/2 rounded-lg border-black border-solid border-2" [ngClass]="activity?.tag | lowercase">
+<div class="activityCard w-1/2 rounded-lg border-black border-solid border-2" [ngClass]="activity?.tag | lowercase">
     <h3>Name: {{activity?.name}}</h3>
     <p>Description: {{activity?.description}}</p>
     <p>Tag: {{activity?.tag}}</p>
     <p>Price: {{activity?.cost}}</p>
-</button>
+    <button (click)="deleteActivity()">Delete Activity</button>
+</div>

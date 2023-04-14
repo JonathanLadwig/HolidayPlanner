@@ -52,4 +52,5 @@ export class ActivityEffects {
           )//end of concat map
         )//end of action obs watcher
     )//end of create effect
+
 }

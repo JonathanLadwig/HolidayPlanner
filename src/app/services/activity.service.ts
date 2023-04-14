@@ -31,7 +31,14 @@ export class ActivityService {
   }
 
   removeActivity(activityID: string) {
-    this.afs.collection('activities').doc(activityID).delete();
+    //get the activity doc id from the activityID
+    const activityToDeleteDoc = this.afs.collection('activities', ref => ref.where('id', '==', activityID));
+    activityToDeleteDoc.get().subscribe((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        doc.ref.delete();
+      })
+    }
+    )
   }
 
   updateActivity(activity: IActivity) {
