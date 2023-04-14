@@ -33,4 +33,14 @@ export class HolidayEffects {
         )//end of action obs watcher
     )//end of create effect
 
+  //set the selected holiday ID in service
+  setSelectedHolidayID$ =
+    createEffect(
+      () =>
+        this.actions$.pipe(
+          ofType(HolidayActions.setSelectedHolidayID),
+          tap((action) => this.holidayService.setSelectedHoliday(action.idHoliday))
+        ),
+      { dispatch: false }
+    )
 }
