@@ -29,4 +29,12 @@ export class ActivityService {
   addActivity(newActivity: IActivity) {
     this.activitiesCollection.add(newActivity);
   }
+
+  removeActivity(activityID: string) {
+    this.afs.collection('activities').doc(activityID).delete();
+  }
+
+  updateActivity(activity: IActivity) {
+    this.afs.collection('activities').doc(activity.id).update(activity);
+  }
 }
