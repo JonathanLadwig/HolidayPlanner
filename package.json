@@ -24,6 +24,7 @@
     "@ngrx/entity": "^15.4.0",
     "@ngrx/store": "^15.4.0",
     "@ngrx/store-devtools": "^15.4.0",
+    "date-fns": "^2.29.3",
     "ng-zorro-antd": "^15.0.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

@@ -18,9 +18,32 @@ export const initialState: HolidayState = {
 
 export const reducer = createReducer(
   initialState,
-  on(HolidayActions.loadHolidays, state => state),
-  on(HolidayActions.loadHolidaysSuccess, (state, action) => state),
-  on(HolidayActions.loadHolidaysFailure, (state, action) => state),
+  // on(HolidayActions.loadHolidays, state => state),
+  // on(HolidayActions.loadHolidaysSuccess, (state, action) => state),
+  // on(HolidayActions.loadHolidaysFailure, (state, action) => state),
+
+  on(HolidayActions.addHoliday, (state, { newHoliday }) => {
+    return {
+      ...state,
+      activities: [...state.holidays, newHoliday]
+    }
+  }),
+  on(HolidayActions.deleteHoliday, (state, { idHoliday }) => {
+    return {
+      ...state,
+      activities: state.holidays.filter(holiday => holiday.id !== idHoliday)
+    }
+  }),
+  on(HolidayActions.loadHolidays, state => ({ ...state, status: 'loading' })),
+  on(HolidayActions.loadHolidaysSuccess, (state, { holidays }) => ({
+    ...state,
+    holidays,
+    error: null,
+    status: 'success'
+  })),
+  on(HolidayActions.loadHolidaysFailure, (state, { error }) => ({ ...state, error: error, status: 'error' }))
+
+
 );
 
 export const holidayFeature = createFeature({

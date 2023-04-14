@@ -31,5 +31,4 @@ export class ActivityEffects {
     )//end of create effect
   constructor(private actions$: Actions, private activityService: ActivityService) {
   }
-
 }

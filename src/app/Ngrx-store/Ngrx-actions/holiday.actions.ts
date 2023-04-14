@@ -22,10 +22,10 @@ export const loadHolidays = createAction(
 
 export const loadHolidaysSuccess = createAction(
   '[Holiday] Load Holidays Success',
-  props<{ data: any }>()
+  props<{ holidays: IHoliday[] }>()
 );
 
 export const loadHolidaysFailure = createAction(
   '[Holiday] Load Holidays Failure',
-  props<{ error: any }>()
+  props<{ error: string }>()
 );

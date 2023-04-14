@@ -4,7 +4,9 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { addHoliday } from 'src/app/Ngrx-store/Ngrx-actions/holiday.actions';
 import { IHoliday } from 'src/app/models/Trip';
+import { HolidayService } from 'src/app/services/holiday.service';
 import { AppState } from 'src/app/shared/app.state';
 
 @Component({
@@ -18,7 +20,7 @@ export class NewHolidayTabComponent implements OnInit {
   holidays: Observable<IHoliday[]>;
   userID: string = '';
 
-  constructor(private fb: UntypedFormBuilder, private store: Store<AppState>, private readonly afs: AngularFirestore, private afa: AngularFireAuth) {
+  constructor(private fb: UntypedFormBuilder, private store: Store<AppState>, private readonly afs: AngularFirestore, private afa: AngularFireAuth, private holidayService: HolidayService) {
     this.holidaysCollection = afs.collection<IHoliday>('holidays');
     this.holidays = this.holidaysCollection.valueChanges({ idField: 'holidayID' });
   }
@@ -45,13 +47,10 @@ export class NewHolidayTabComponent implements OnInit {
         description: this.validateHolidayForm.value.holidayDescription || '',
         itinerary: []
       }
-      this.addNewHoliday(newHoliday);
+      this.store.dispatch(addHoliday({ newHoliday }))
+      //do this with side effects later
+      this.holidayService.addHoliday(newHoliday);
     }
-  }
-
-  //should be handled by service?
-  addNewHoliday(newHoliday: IHoliday): void {
-    this.holidaysCollection.add(newHoliday);
   }
 
 }
