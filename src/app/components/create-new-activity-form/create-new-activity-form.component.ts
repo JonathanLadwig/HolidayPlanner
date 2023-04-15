@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from "@ngrx/store";
 import { addActivity } from 'src/app/Ngrx-store/Ngrx-actions/activity.actions';
 import { ActivityService } from 'src/app/services/activity.service';
@@ -19,7 +20,7 @@ export class CreateNewActivityFormComponent {
   validateForm!: UntypedFormGroup;
   tagOptions: string[] = ['Food', 'Hiking', 'Sightseeing', 'Shopping', 'Travel', 'Other'];
 
-  constructor(private fb: UntypedFormBuilder, private store: Store<AppState>, private readonly afs: AngularFirestore, private activityService: ActivityService, private holidayService: HolidayService) {
+  constructor(private fb: UntypedFormBuilder, private store: Store<AppState>, private readonly afs: AngularFirestore, private activityService: ActivityService, private holidayService: HolidayService, private router: Router) {
     // this.holidayID$.subscribe(id => console.log(id));
   }
 
@@ -75,10 +76,18 @@ export class CreateNewActivityFormComponent {
 
   //should be done via effects in the store
   addNewActivity(activity: IActivity) {
+    console.log("New activity", activity);
     this.validateForm.reset();
     this.store.dispatch(addActivity({ newActivity: activity }));
     this.activityService.addActivity(activity);
-    //popup message
+  }
+
+  createAnother() {
+    this.submitForm();
+  }
+  goToDashboard() {
+    this.submitForm();
+    this.router.navigate(['dashboard']);
   }
 }
 

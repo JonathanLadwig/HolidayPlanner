@@ -1,7 +1,23 @@
-<div class="activityCard w-1/2 rounded-lg border-black border-solid border-2" [ngClass]="activity?.tag | lowercase">
-    <h3>Name: {{activity?.name}}</h3>
-    <p>Description: {{activity?.description}}</p>
-    <p>Tag: {{activity?.tag}}</p>
-    <p>Price: {{activity?.cost}}</p>
-    <button (click)="deleteActivity()">Delete Activity</button>
+<div class="activityCard w-full rounded-xl border-2" [ngClass]="activity?.tag | lowercase">
+    <div class="coloured-top h-12 rounded-xl p-2" (click)="toggle()">
+        <h4>{{activity?.name}}</h4>
+    </div>
+    <div *ngIf="isOpen" [@openClose]="isOpen ? 'open' : 'closed'">
+        <div class="card-content px-2">
+            <p class="font-light">Description: {{activity?.description}}</p>
+            <p>Tag: {{activity?.tag}}</p>
+            <p>Price: {{activity?.cost}}</p>
+            <p>Starts At: {{getDate(activity?.startDateTime) | date: 'dMMM H:ma'}}</p>
+            <p>Ends At: {{getDate(activity?.endDateTime) | date: 'dMMM H:ma'}}</p>
+        </div>
+        <div class="card-buttons flex justify-evenly ">
+            <button nz-button nzType="default" nz-popconfirm nzPopconfirmTitle="Are you sure delete this activity?"
+                nzPopconfirmPlacement="bottom" (nzOnConfirm)="confirmDelete()" (nzOnCancel)="cancelDelete()">
+                Delete Activity
+            </button>
+            <button nz-button nzType="default" (click)="editActivity()">
+                Edit Activity
+            </button>
+        </div>
+    </div>
 </div>

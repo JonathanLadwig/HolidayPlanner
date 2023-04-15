@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Store } from '@ngrx/store';
 import { NzCalendarMode } from 'ng-zorro-antd/calendar';
 import { Observable } from 'rxjs';
+import { loadActivitiesByHolidayID } from 'src/app/Ngrx-store/Ngrx-actions/activity.actions';
+import { selectAllActivitiesSortedByDateWithDate, selectAllActivitiesSortedByDateWithMonth } from 'src/app/Ngrx-store/Ngrx-selectors/activity.selector';
 import { IActivity } from 'src/app/models/Trip';
+import { HolidayService } from 'src/app/services/holiday.service';
+import { AppState } from 'src/app/shared/app.state';
 
 @Component({
   selector: 'app-calendar',
@@ -10,18 +14,35 @@ import { IActivity } from 'src/app/models/Trip';
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
-  date = new Date();
+  selectedDate = new Date();
   mode: NzCalendarMode = 'month';
-  public allActivities$: Observable<IActivity[]> | undefined;
+  allActivities$: Observable<IActivity[]> | undefined;
+  listDataMap: IActivity[] | undefined;
+  daysInMonth: number = new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth() + 1, 0).getDate();
 
-  constructor(private afs: AngularFirestore) { }
+  constructor(private store: Store<AppState>, private holidayService: HolidayService) { }
 
   panelChange(change: { date: Date; mode: string }): void {
-    console.log(change.date, change.mode);
+  }
+
+  selectChange($event: Date) {
+    console.log($event);
+    this.selectedDate = $event;
+    this.getActivitiesByDate();
   }
 
   ngOnInit(): void {
-    this.allActivities$ = this.afs.collection<IActivity>('activities').valueChanges();
+    const holidayID = this.holidayService.getSelectedHolidayID();
+    this.store.dispatch(loadActivitiesByHolidayID({ idHoliday: holidayID }));
+    //
+    this.store.select(selectAllActivitiesSortedByDateWithMonth(this.selectedDate)).subscribe((activities) => {
+      this.listDataMap = activities;
+    })
+    this.getActivitiesByDate();
+  }
+
+  getActivitiesByDate() {
+    this.allActivities$ = this.store.select(selectAllActivitiesSortedByDateWithDate(this.selectedDate));
   }
 
 }

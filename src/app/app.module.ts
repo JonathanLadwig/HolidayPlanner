@@ -23,6 +23,8 @@ import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
@@ -44,13 +46,11 @@ import { NewHolidayTabComponent } from './components/new-holiday-tab/new-holiday
 import { RegisterComponent } from './components/register/register.component';
 import { AuthService } from './shared/auth.service';
 
+// rome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const metaReducers: MetaReducer<any>[] = [debug];
+// rome-ignore lint/suspicious/noExplicitAny: <explanation>
 export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
   return function (state, action) {
-    // if (
-    //   action.type == '[Trip] Get All Itinerary Items' ||
-    //   action.type == '[Trip] Get All Trips'
-    // ){
     console.log(action.type, action);
     console.log('current state', state)
     console.log('future value of state', reducer(state, action));
@@ -96,6 +96,8 @@ registerLocaleData(en);
     NzInputModule,
     NzSelectModule,
     NzTabsModule,
+    NzPopconfirmModule,
+    NzMessageModule,
     EffectsModule.forRoot([]),
     StoreModule.forRoot({}, { metaReducers }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),

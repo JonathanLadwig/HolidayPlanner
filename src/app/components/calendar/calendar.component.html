@@ -1,8 +1,29 @@
-<nz-calendar [(ngModel)]="date" [(nzMode)]="mode" (nzPanelChange)="panelChange($event)">
-    <ul>
-        <li *ngFor="let activity of allActivities$| async">
-            <nz-badge nzColor="red" [nzStatus]="activity.name" [nzText]="activity.description"></nz-badge>
-        </li>
+<!-- <nz-calendar [(ngModel)]="selectedDate" [(nzMode)]="mode" (nzSelectChange)="selectChange($event)"
+    (nzPanelChange)="panelChange($event)">
+
+    <ul *nzDateCell="let date" class="events">
+        <ng-container [ngSwitch]="date.getDate()">
+            <div *ngFor="let date of daysInMonth">
+                <ng-container *ngSwitchCase="daysInMonth">
+                    <li *ngFor="let item of listDataMap">
+                        <div *ngIf="getDateFromFS(item.startDateTime)">
+                            <nz-badge nzStatus="success" [nzText]="item.name"></nz-badge>
+                        </div>
+                    </li>
+                </ng-container>
+            </div>
+        </ng-container>
     </ul>
-</nz-calendar>
-<!-- doesn't work, must show events by date and change event colour based on activity.typr d -->
+
+</nz-calendar> -->
+<div class="calendar-component mx-4">
+    <div [ngStyle]="{ width: 'full', border: '1px solid #d9d9d9', borderRadius: '4px' }">
+        <nz-calendar [nzFullscreen]="false" (nzSelectChange)="selectChange($event)"
+            (nzPanelChange)="panelChange($event)"></nz-calendar>
+    </div>
+    <br>
+    <h3 class="text-lg">Itinerary for {{selectedDate | date: 'longDate'}}:</h3>
+    <div *ngFor="let activity of allActivities$| async">
+        <app-activity-card [activity]="activity" />
+    </div>
+</div>

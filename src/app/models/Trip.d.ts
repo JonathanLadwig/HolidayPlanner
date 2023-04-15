@@ -1,3 +1,4 @@
+
 export interface IUser {
     uid: string;
     email: string;
@@ -19,6 +20,20 @@ export interface IActivity {
     tag: string; //change to custom type later?
     startDateTime: Date;
     endDateTime: Date;
+    cost?: number;
+    currency?: string;
+    location?: ILatLong;
+    endLocation?: ILatLong;
+}
+
+export interface IActivityFS {
+    id: string;
+    fkHolidayID: string;
+    name: string;
+    description?: string;
+    tag: string; //change to custom type later?
+    startDateTime: Date | firebase.firestore.Timestamp;
+    endDateTime: Date | firebase.firestore.Timestamp;
     cost?: number;
     currency?: string;
     location?: ILatLong;

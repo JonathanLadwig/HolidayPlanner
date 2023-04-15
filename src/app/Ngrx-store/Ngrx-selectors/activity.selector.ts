@@ -1,4 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
+import { Timestamp } from "firebase/firestore";
 import { IActivity } from "src/app/models/Trip";
 import { ActivityState, activityFeatureKey } from "../Ngrx-reducers/activity.reducer";
 
@@ -16,14 +17,39 @@ export const selectAllActivitiesSortedByDate = createSelector(
     const activities = structuredClone(state.activities);
     return activities
       .sort((a: IActivity, b: IActivity) => {
-        console.log(a, b)
         if (a && b) {
-          const dateA = new Date(a.startDateTime)
-          const dateB = new Date(b.startDateTime)
+          const timestampA = a.startDateTime as unknown as Timestamp
+          const timestampB = b.startDateTime as unknown as Timestamp
+          const dateA = new Date(timestampA.seconds * 1000);
+          const dateB = new Date(timestampB.seconds * 1000);
           return (dateA.getDate() - dateB.getDate());
         }
         return 0
       })
+  }
+)
+
+//get all activities with selected date
+export const selectAllActivitiesSortedByDateWithDate = (date: Date) => createSelector(
+  selectAllActivitiesSortedByDate,
+  (activities: IActivity[]) => {
+    return activities.filter((activity: IActivity) => {
+      const timestamp = activity.startDateTime as unknown as Timestamp
+      const activityDate = new Date(timestamp.seconds * 1000);
+      return (activityDate.getDate() === date.getDate() && activityDate.getMonth() === date.getMonth() && activityDate.getFullYear() === date.getFullYear())
+    })
+  }
+)
+
+//get all activities with selected month
+export const selectAllActivitiesSortedByDateWithMonth = (date: Date) => createSelector(
+  selectAllActivitiesSortedByDate,
+  (activities: IActivity[]) => {
+    return activities.filter((activity: IActivity) => {
+      const timestamp = activity.startDateTime as unknown as Timestamp
+      const activityDate = new Date(timestamp.seconds * 1000);
+      return (activityDate.getMonth() === date.getMonth() && activityDate.getFullYear() === date.getFullYear())
+    })
   }
 )
 
@@ -32,3 +58,18 @@ export const selectSpecificActivity = (activityID: string) => createSelector(
   selectActivityState,
   (state: ActivityState) => state.activities.find(activity => activity.id === activityID)
 )
+
+export const getHolidayTotalCost = (holidayID: string) => {
+  return createSelector(
+    selectActivityState,
+    (state: ActivityState) => {
+      let totalCost = 0;
+      state.activities.forEach(activity => {
+        if (activity.fkHolidayID === holidayID) {
+          totalCost += activity.cost ?? 0;
+        }
+      })
+      return totalCost;
+    }
+  )
+}

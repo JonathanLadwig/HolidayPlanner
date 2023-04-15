@@ -1,8 +1,8 @@
 <!-- <app-holiday-viewer></app-holiday-viewer> -->
 <nz-tabset class="holiday-tabs">
+    <nz-tab nzTitle="+ Add Holiday"><app-new-holiday-tab /></nz-tab>
     <div *ngFor="let holiday of allHolidays$ | async">
         <nz-tab [nzTitle]="holiday.name" (nzClick)="setSelectedHoliday(holiday)"><app-holiday-tab
                 [holiday]="holiday" /></nz-tab>
     </div>
-    <nz-tab nzTitle="+ Add Holiday"><app-new-holiday-tab /></nz-tab>
 </nz-tabset>

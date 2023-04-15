@@ -55,7 +55,10 @@
     <!-- Submit -->
     <nz-form-item>
         <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 16, offset: 8 }">
-            <button nz-button nzType="primary">Submit</button>
+            <button nz-button nzType="primary" nz-popconfirm
+                nzPopconfirmTitle="Success! Do you want to continue to create another new activity?"
+                nzPopconfirmPlacement="bottom" (nzOnConfirm)="createAnother()"
+                (nzOnCancel)="goToDashboard()">Submit</button>
         </nz-form-control>
     </nz-form-item>
 </form>

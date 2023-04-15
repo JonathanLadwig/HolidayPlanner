@@ -36,7 +36,7 @@ export class HolidayService {
     this.afs.collection('holidays').add(holiday);
   }
 
-  removeHoliday(holidayID: string) {
+  deleteHoliday(holidayID: string) {
     //get the holiday doc id from the holidayID
     const holidayToDeleteDoc = this.afs.collection('holidays', ref => ref.where('id', '==', holidayID));
     holidayToDeleteDoc.get().subscribe((querySnapshot) => {

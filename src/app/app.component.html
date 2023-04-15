@@ -1,8 +1,8 @@
-<nav class="flex justify-between">Nav
-    <button (click)="goToDashboard()">Home</button>
-    <button (click)="goToCalendar()"></button>
-    <h2>Welcome {{displayName}}</h2>
-    <button (click)="logOut()">Logout</button>
-</nav>
-<router-outlet></router-outlet>
-<footer>Footer</footer>
+<div class="relative h-full">
+    <nav class="h-12 w-full sticky top-0 left-0 flex justify-between bg-primary z-10">Nav
+        <button (click)="goToDashboard()">Home</button>
+        <h2>Welcome {{displayName}}</h2>
+        <button (click)="logOut()">Logout</button>
+    </nav>
+    <router-outlet></router-outlet>
+</div>

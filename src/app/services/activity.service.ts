@@ -22,12 +22,14 @@ export class ActivityService {
   }
 
   getActivitiesByHolidayID(holidayID: string): Observable<IActivity[]> {
+    //get activities by holidayID and convert timestamp to date
+
     const activitiesByHoliday = this.afs.collection<IActivity>('activities', ref => ref.where('fkHolidayID', '==', holidayID));
     return activitiesByHoliday.valueChanges();
   }
 
-  addActivity(newActivity: IActivity) {
-    this.activitiesCollection.add(newActivity);
+  addActivity(activity: IActivity) {
+    this.activitiesCollection.add(activity);
   }
 
   removeActivity(activityID: string) {

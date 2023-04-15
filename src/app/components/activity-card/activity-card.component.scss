@@ -1,27 +1,40 @@
 .travel {
-  background-color: blue;
+  .coloured-top {
+    background-color: blue;
+  }
 }
 
 .hiking {
-  background-color: green;
+  .coloured-top {
+    background-color: green;
+  }
 }
 
 .food {
-  background-color: red;
+  .coloured-top {
+    background-color: hsl(0, 100%, 61%);
+  }
 }
 
 .sightseeing {
-  background-color: yellow;
+  .coloured-top {
+    background-color: rgb(255, 128, 0);
+  }
 }
 
 .shopping {
-  background-color: purple;
+  .coloured-top {
+    background-color: purple;
+  }
 }
 
 .other {
-  background-color: orange;
+  .coloured-top {
+    background-color: black;
+  }
 }
 
-h3 {
+h4 {
   font-size: large;
+  color: white;
 }

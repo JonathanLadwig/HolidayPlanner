@@ -43,4 +43,10 @@ export class HolidayEffects {
         ),
       { dispatch: false }
     )
+
+  //add new holiday
+
+  //delete holiday
+
+  //update holiday
 }
