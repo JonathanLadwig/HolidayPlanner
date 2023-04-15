@@ -6,7 +6,7 @@
         <div class="card-content px-2">
             <p class="font-light">Description: {{activity?.description}}</p>
             <p>Tag: {{activity?.tag}}</p>
-            <p>Price: {{activity?.cost}}</p>
+            <p>Price: {{(activity?.cost | currency : 'R')}}</p>
             <p>Starts At: {{getDate(activity?.startDateTime) | date: 'dMMM H:ma'}}</p>
             <p>Ends At: {{getDate(activity?.endDateTime) | date: 'dMMM H:ma'}}</p>
         </div>

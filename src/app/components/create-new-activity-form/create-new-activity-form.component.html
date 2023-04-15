@@ -1,4 +1,4 @@
-<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" class="activity-form py-4 bg-slate-400">
     <!-- Name -->
     <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Activity-Name</nz-form-label>
@@ -47,9 +47,18 @@
     <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24">Total-Cost</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24">
-            <nz-input-number-group nzSuffix="USD" nzPrefix="$" style="width: auto; padding-right: 3rem;">
+            <nz-input-number-group style="width: auto; padding-right: 3rem;">
                 <nz-input-number [nzStep]="0.01" [nzMin]="0" style="width: 6rem;" formControlName="totalCost" />
             </nz-input-number-group>
+        </nz-form-control>
+    </nz-form-item>
+    <!-- Currency -->
+    <nz-form-item>
+        <nz-form-label nzRequired [nzSm]="8" [nzXs]="24">Currency</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">
+            <nz-select style="width: 12rem;" formControlName="currency" nzShowSearch nzAllowClear>
+                <nz-option *ngFor="let option of currencies" [nzLabel]="option" [nzValue]="option"></nz-option>
+            </nz-select>
         </nz-form-control>
     </nz-form-item>
     <!-- Submit -->

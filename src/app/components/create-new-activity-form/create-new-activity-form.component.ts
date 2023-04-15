@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Store } from "@ngrx/store";
 import { addActivity } from 'src/app/Ngrx-store/Ngrx-actions/activity.actions';
 import { ActivityService } from 'src/app/services/activity.service';
+import { CurrencyService } from 'src/app/services/currency.service';
 import { HolidayService } from 'src/app/services/holiday.service';
 import { AppState } from 'src/app/shared/app.state';
 import { IActivity } from "../../models/Trip";
@@ -15,13 +16,17 @@ import { IActivity } from "../../models/Trip";
   styleUrls: ['./create-new-activity-form.component.scss']
 })
 export class CreateNewActivityFormComponent {
-  // holidayID$ = this.store.select(getSelectedHolidayID);
   holidayID: string = this.holidayService.getSelectedHolidayID();
   validateForm!: UntypedFormGroup;
   tagOptions: string[] = ['Food', 'Hiking', 'Sightseeing', 'Shopping', 'Travel', 'Other'];
+  chosenCurrency: string = 'ZAR';
+  currencyOptions$ = this.currencyService.getSupportedCurrencies();
+  currencies: string[] = [];
 
-  constructor(private fb: UntypedFormBuilder, private store: Store<AppState>, private readonly afs: AngularFirestore, private activityService: ActivityService, private holidayService: HolidayService, private router: Router) {
-    // this.holidayID$.subscribe(id => console.log(id));
+  constructor(private fb: UntypedFormBuilder, private store: Store<AppState>, private readonly afs: AngularFirestore, private activityService: ActivityService, private holidayService: HolidayService, private router: Router, private currencyService: CurrencyService) {
+    this.currencyOptions$.subscribe(data => {
+      this.currencies = Object.keys(data.symbols) as string[];
+    })
   }
 
   submitForm(): void {
@@ -39,17 +44,22 @@ export class CreateNewActivityFormComponent {
         activityEndDateTime.setDate(chosenDate.getDate() + 1);
       }
 
-      const newActivity: IActivity = {
-        id: this.afs.createId(),
-        fkHolidayID: this.holidayID,
-        name: this.validateForm.value.activityName,
-        description: this.validateForm.value.activityDescription || '',
-        cost: this.validateForm.value.totalCost,
-        tag: this.validateForm.value.tag,
-        startDateTime: activityStartDateTime,
-        endDateTime: activityEndDateTime
-      }
-      this.addNewActivity(newActivity);
+      //convert the cost to chosen currency then subscribe and store data in the database and state (has to be done this way because of the async nature of the conversion)
+      this.currencyService.convertCurrencies(this.validateForm.value.currency, 'ZAR', this.validateForm.value.totalCost).subscribe(data => {
+        const newActivity: IActivity = {
+          id: this.afs.createId(),
+          fkHolidayID: this.holidayID,
+          name: this.validateForm.value.activityName,
+          description: this.validateForm.value.activityDescription || '',
+          cost: data.result,
+          currency: this.validateForm.value.currency,
+          tag: this.validateForm.value.tag,
+          startDateTime: activityStartDateTime,
+          endDateTime: activityEndDateTime
+        }
+        this.addNewActivity(newActivity);
+      })
+
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {
@@ -69,7 +79,8 @@ export class CreateNewActivityFormComponent {
       datePicker: [null, Validators.required],
       startTimePicker: [null, Validators.required],
       endTimePicker: [null, Validators.required],
-      totalCost: [0]
+      totalCost: [0],
+      currency: [null, Validators.required]
     });
     console.log("SelectedHolidayID", this.holidayID);
   }
@@ -89,5 +100,6 @@ export class CreateNewActivityFormComponent {
     this.submitForm();
     this.router.navigate(['dashboard']);
   }
+
 }
 

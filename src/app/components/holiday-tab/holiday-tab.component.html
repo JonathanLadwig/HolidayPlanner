@@ -4,7 +4,7 @@
     <br>
     <p class="text-base ">Start Date: {{startDate | date }}</p>
     <p class="text-base ">End Date: {{endDate | date }}</p>
-    <p class="text-base ">Total Cost: {{totalCost}}</p>
+    <p class="text-base ">Total Cost: {{totalCost | currency : 'R'}}</p>
     <br>
     <button nz-button nz-type="default" (click)="openCalendar()">Calendar</button>
     <button nz-button nz-type="default" nz-popconfirm nzPopconfirmTitle="Are you sure delete this holiday?"
