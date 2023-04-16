@@ -36,9 +36,6 @@ export class EditActivityFormComponent implements OnInit {
     const startDate = toDate(getDateFromFS(this.oldActivity?.startDateTime as unknown));
     const endDate = toDate(getDateFromFS(this.oldActivity?.endDateTime as unknown));
 
-    console.log("StartDate: ", startDate);
-    console.log("EndDate: ", endDate);
-
     if (this.oldActivity) {
       this.validateEditForm = this.fb.group({
         totalCost: ['0'],
