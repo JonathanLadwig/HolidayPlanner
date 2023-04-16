@@ -1,19 +1,27 @@
+<div class="text-sm mx-2">{{getDate(activity?.startDateTime) | date: 'short'}}</div>
 <div class="activityCard w-full rounded-xl border-2" [ngClass]="activity?.tag | lowercase">
-    <div class="coloured-top h-12 rounded-xl p-2" (click)="toggle()">
+    <div aria-label="press to open" class="coloured-top h-12 rounded-xl p-2 flex flex-row justify-between items-center"
+        (click)="toggle()">
         <h4>{{activity?.name}}</h4>
+        <i *ngIf="!isOpen" nz-icon nzType="caret-down" nzTheme="outline" class="text-xl text-white"></i>
+        <i *ngIf="isOpen" nz-icon nzType="caret-up" nzTheme="outline" class="text-xl text-white"></i>
     </div>
     <div *ngIf="isOpen" [@openClose]="isOpen ? 'open' : 'closed'">
         <div class="card-content px-2">
             <p class="font-light">Description: {{activity?.description}}</p>
             <p>Tag: {{activity?.tag}}</p>
             <p>Price: {{(activity?.cost | currency : 'R')}}</p>
-            <p>Starts At: {{getDate(activity?.startDateTime) | date: 'dMMM H:mma'}}</p>
-            <p>Ends At: {{getDate(activity?.endDateTime) | date: 'dMMM H:mma'}}</p>
+            <p>Starts At: {{getDate(activity?.startDateTime) | date: 'd MMM YYYY H:mma'}}</p>
+            <p>Ends At: {{getDate(activity?.endDateTime) | date: 'd MMM YYYY H:mma'}}</p>
         </div>
         <div class="card-buttons flex justify-evenly ">
-            <button nz-button nzType="default" nz-popconfirm nzPopconfirmTitle="Are you sure delete this activity?"
-                nzPopconfirmPlacement="bottom" (nzOnConfirm)="confirmDelete()" (nzOnCancel)="cancelDelete()">
+            <button aria-label="delete activity" class="my-2" nz-button nzType="default" nz-popconfirm
+                nzPopconfirmTitle="Are you sure delete this activity?" nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="confirmDelete()" (nzOnCancel)="cancelDelete()">
                 Delete Activity
+            </button>
+            <button aria-label="edit activity" class="my-2" nz-button nzType="default" (click)="editActivity()">
+                Edit Activity
             </button>
         </div>
     </div>

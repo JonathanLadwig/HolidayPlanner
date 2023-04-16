@@ -82,12 +82,10 @@ export class CreateNewActivityFormComponent {
       totalCost: [0],
       currency: [null, Validators.required]
     });
-    console.log("SelectedHolidayID", this.holidayID);
   }
 
   //should be done via effects in the store
   addNewActivity(activity: IActivity) {
-    console.log("New activity", activity);
     this.validateForm.reset();
     this.store.dispatch(addActivity({ newActivity: activity }));
     this.activityService.addActivity(activity);

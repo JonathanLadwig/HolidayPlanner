@@ -20,7 +20,6 @@ export class HolidayService {
     const holidaysByUser = this.afs.collection<IHoliday>('holidays', (ref) =>
       ref.where('fkUserID', '==', currentUserID),
     );
-    console.log('GetHolidaysUserID', currentUserID);
     return holidaysByUser.valueChanges();
   }
 

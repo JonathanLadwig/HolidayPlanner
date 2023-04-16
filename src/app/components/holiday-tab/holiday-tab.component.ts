@@ -25,8 +25,13 @@ export class HolidayTabComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.select(selectAllActivitiesSortedByDate).subscribe((activities) => {
-      this.startDate = getDateFromFS(activities[0]?.startDateTime);
-      this.endDate = getDateFromFS(activities[activities.length - 1]?.endDateTime);
+      if (activities.length === 0) {
+        this.startDate = new Date();
+        this.endDate = new Date();
+      } else {
+        this.startDate = getDateFromFS(activities[0]?.startDateTime);
+        this.endDate = getDateFromFS(activities[activities.length - 1]?.endDateTime);
+      }
     })
     this.store.select(getHolidayTotalCost(this.holiday?.id || '')).subscribe((cost) => {
       this.totalCost = cost;

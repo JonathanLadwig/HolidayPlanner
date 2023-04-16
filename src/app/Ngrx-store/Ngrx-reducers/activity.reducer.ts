@@ -6,7 +6,8 @@ import {
   loadActivities,
   loadActivitiesByHolidayID,
   loadActivitiesFailure,
-  loadActivitiesSuccess
+  loadActivitiesSuccess,
+  updateActivity
 } from "../Ngrx-actions/activity.actions";
 
 export const activityFeatureKey = 'activity';
@@ -24,14 +25,29 @@ export const initialState: ActivityState = {
 }
 export const reducer = createReducer(
   initialState,
-  //Add new holiday-viewer case
+  //Add new activity case
   on(addActivity, (state, { newActivity }) => {
     return {
       ...state,
       activities: [...state.activities, newActivity]
     }
   }),
-  //Delete existing holiday-viewer case
+  //Update existing activity case
+  on(updateActivity, (state, { idActivity }) => {
+    return {
+      ...state,
+      activities: state.activities.map(activity => {
+        if (activity.id === idActivity) {
+          return {
+            ...activity,
+            isEditing: true
+          }
+        }
+        return activity;
+      })
+    }
+  }),
+  //Delete existing activity case
   on(deleteActivity, (state, { idActivity }) => {
     return {
       ...state,

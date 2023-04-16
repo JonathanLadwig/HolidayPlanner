@@ -11,7 +11,7 @@ export const deleteActivity = createAction(
   props<{ idActivity: string }>()
 );
 
-export const editActivity = createAction(
+export const updateActivity = createAction(
   '[Activities] Edit Existing Activity',
   props<{ idActivity: string }>()
 );

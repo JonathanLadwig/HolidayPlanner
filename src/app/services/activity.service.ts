@@ -9,12 +9,21 @@ import { IActivity } from '../models/Trip';
 })
 export class ActivityService {
   activitiesCollection = this.afs.collection<IActivity>('activities');
+  selectedActivity: IActivity | undefined;
 
   //get selectedHolidayID from holiday state
   selectedHolidayID = '1';
 
   //connects to firestore or http for json data
   constructor(private afs: AngularFirestore, private http: HttpClient) {
+  }
+
+  setSelectedActivity(activity: IActivity) {
+    this.selectedActivity = activity;
+  }
+
+  getSelectedActivity(): IActivity | undefined {
+    return this.selectedActivity;
   }
 
   getActivities(): Observable<IActivity[]> {
@@ -44,6 +53,13 @@ export class ActivityService {
   }
 
   updateActivity(activity: IActivity) {
-    this.afs.collection('activities').doc(activity.id).update(activity);
+    // the id is not the document id, it is the activity id
+    const activityToUpdateDoc = this.afs.collection('activities', ref => ref.where('id', '==', activity.id));
+    activityToUpdateDoc.get().subscribe((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        doc.ref.update(activity);
+      })
+    }
+    )
   }
 }

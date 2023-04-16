@@ -37,10 +37,8 @@ export class DashboardComponent implements OnInit {
   onResize(event: unknown) {
     if (window.screen.width < 600) { // 768px portrait
       this.mobile = true;
-      console.log("mobile");
     } else {
       this.mobile = false;
-      console.log("desktop");
     }
   }
 

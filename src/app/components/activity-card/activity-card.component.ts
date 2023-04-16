@@ -1,7 +1,8 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { deleteActivity, editActivity } from 'src/app/Ngrx-store/Ngrx-actions/activity.actions';
+import { deleteActivity } from 'src/app/Ngrx-store/Ngrx-actions/activity.actions';
 import { ActivityState } from 'src/app/Ngrx-store/Ngrx-reducers/activity.reducer';
 import { IActivity } from 'src/app/models/Trip';
 import { ActivityService } from 'src/app/services/activity.service';
@@ -34,7 +35,7 @@ export class ActivityCardComponent {
   isOpen = false;
 
   @Input() activity: IActivity | undefined;
-  constructor(private store: Store<ActivityState>, private activityService: ActivityService) { }
+  constructor(private store: Store<ActivityState>, private activityService: ActivityService, private router: Router) { }
 
   toggle() {
     this.isOpen = !this.isOpen;
@@ -49,7 +50,10 @@ export class ActivityCardComponent {
   }
 
   editActivity() {
-    this.store.dispatch(editActivity({ idActivity: this.activity?.id || '' }));
+    if (this.activity) {
+      this.activityService.setSelectedActivity(this.activity);
+      this.router.navigate(['edit-activity']);
+    }
   }
 
   getDate(fsDate: unknown) {

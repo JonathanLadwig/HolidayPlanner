@@ -49,6 +49,15 @@ export class NewHolidayTabComponent implements OnInit {
       this.store.dispatch(addHoliday({ newHoliday }));
       this.holidayService.addHoliday(newHoliday);
     }
+    else {
+      Object.values(this.validateHolidayForm.controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+      alert('Please fill in all required fields');
+    }
   }
 
 }

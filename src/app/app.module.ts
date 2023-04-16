@@ -11,6 +11,8 @@ import { AngularFireAuthModule, PERSISTENCE } from '@angular/fire/compat/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgIconsModule } from '@ng-icons/core';
+import * as material from '@ng-icons/material-icons/outline';
 import { EffectsModule } from '@ngrx/effects';
 import { ActionReducer, MetaReducer, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -45,6 +47,7 @@ import { LoginComponent } from './components/login/login.component';
 import { NewHolidayTabComponent } from './components/new-holiday-tab/new-holiday-tab.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthService } from './shared/auth.service';
+import { EditActivityFormComponent } from './components/edit-activity-form/edit-activity-form.component';
 
 // rome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const metaReducers: MetaReducer<any>[] = [debug];
@@ -72,12 +75,14 @@ registerLocaleData(en);
     ActivityCardComponent,
     ActivityComponent,
     NewHolidayTabComponent,
-    HolidayTabComponent
+    HolidayTabComponent,
+    EditActivityFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularFireAuthModule,
+    NgIconsModule.withIcons(material),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
