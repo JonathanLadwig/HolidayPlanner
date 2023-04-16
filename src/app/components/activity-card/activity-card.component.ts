@@ -55,11 +55,4 @@ export class ActivityCardComponent {
   getDate(fsDate: unknown) {
     return getDateFromFS(fsDate);
   }
-
-  // getDate(fsDate: unknown) {
-  //   //convert firebase timestamp to date
-  //   const dateTimeStamp = fsDate as Timestamp;
-  //   const dateFormatted = new Date(dateTimeStamp.seconds * 1000);
-  //   return (dateFormatted);
-  // }
 }

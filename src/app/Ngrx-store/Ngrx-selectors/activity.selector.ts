@@ -22,12 +22,22 @@ export const selectAllActivitiesSortedByDate = createSelector(
           const timestampB = b.startDateTime as unknown as Timestamp
           const dateA = new Date(timestampA.seconds * 1000);
           const dateB = new Date(timestampB.seconds * 1000);
-          return (dateA.getDate() - dateB.getDate());
+          return (dateA.getDate() - dateB.getDate() || dateA.getTime() - dateB.getTime());
         }
         return 0
       })
   }
 )
+
+export const selectAllActivitiesSortedByDateWithHolidayID = (idHoliday: string) => createSelector(
+  selectAllActivitiesSortedByDate,
+  (activities: IActivity[]) => {
+    return activities.filter((activity: IActivity) => {
+      return (activity.fkHolidayID === idHoliday)
+    })
+  }
+)
+
 
 //get all activities with selected date
 export const selectAllActivitiesSortedByDateWithDate = (date: Date) => createSelector(

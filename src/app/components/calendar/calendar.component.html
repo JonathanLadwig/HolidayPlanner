@@ -1,3 +1,15 @@
+<div class="calendar-component mx-4">
+    <div [ngStyle]="{ width: 'full', border: '1px solid #d9d9d9', borderRadius: '4px' }">
+        <nz-calendar [nzFullscreen]="false" (nzSelectChange)="selectChange($event)"
+            (nzPanelChange)="panelChange($event)"></nz-calendar>
+    </div>
+    <br>
+    <h3 class="text-lg">Itinerary for {{selectedDate | date: 'longDate'}}:</h3>
+    <div *ngFor="let activity of allActivities$| async">
+        <app-activity-card [activity]="activity" />
+    </div>
+</div>
+
 <!-- <nz-calendar [(ngModel)]="selectedDate" [(nzMode)]="mode" (nzSelectChange)="selectChange($event)"
     (nzPanelChange)="panelChange($event)">
 
@@ -14,16 +26,4 @@
             </div>
         </ng-container>
     </ul>
-
 </nz-calendar> -->
-<div class="calendar-component mx-4">
-    <div [ngStyle]="{ width: 'full', border: '1px solid #d9d9d9', borderRadius: '4px' }">
-        <nz-calendar [nzFullscreen]="false" (nzSelectChange)="selectChange($event)"
-            (nzPanelChange)="panelChange($event)"></nz-calendar>
-    </div>
-    <br>
-    <h3 class="text-lg">Itinerary for {{selectedDate | date: 'longDate'}}:</h3>
-    <div *ngFor="let activity of allActivities$| async">
-        <app-activity-card [activity]="activity" />
-    </div>
-</div>

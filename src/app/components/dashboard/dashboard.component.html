@@ -1,8 +1,14 @@
-<!-- <app-holiday-viewer></app-holiday-viewer> -->
-<nz-tabset class="holiday-tabs">
+<nz-tabset *ngIf="mobile" class="holiday-tabs">
     <nz-tab nzTitle="+ Add Holiday"><app-new-holiday-tab /></nz-tab>
     <div *ngFor="let holiday of allHolidays$ | async">
         <nz-tab [nzTitle]="holiday.name" (nzClick)="setSelectedHoliday(holiday)"><app-holiday-tab
                 [holiday]="holiday" /></nz-tab>
     </div>
 </nz-tabset>
+
+<div *ngIf="!mobile" class="grid grid-cols-2 gap-8 xl:grid-cols-3 2xl:grid-cols-4">
+    <app-holiday-tab *ngFor="let holiday of allHolidays$ | async" [holiday]="holiday" />
+    <button
+        class="mx-8 my-4 h-32 text-slate-600 border border-slate-600 hover:bg-slate-600 hover:text-white active:bg-slate-600 font-bold uppercase outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">+
+        Add Holiday</button>
+</div>

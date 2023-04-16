@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { Store } from "@ngrx/store";
@@ -15,6 +15,7 @@ import { AppState } from "src/app/shared/app.state";
 })
 export class DashboardComponent implements OnInit {
   public allHolidays$: Observable<IHoliday[]> | undefined;
+  mobile: boolean = true;
 
   setSelectedHoliday(holiday: IHoliday) {
     this.store.dispatch(setSelectedHolidayID({ idHoliday: holiday.id }));
@@ -23,18 +24,28 @@ export class DashboardComponent implements OnInit {
 
   constructor(private afs: AngularFirestore, private afa: AngularFireAuth, private store: Store<AppState>) {
     //get all holidays where the user id matches the current user id
-    //should be done via a store and a service?
     this.afa.currentUser.then((user) => {
       const holidaysByUser = this.afs.collection<IHoliday>("holidays", (ref) =>
         ref.where("fkUserID", "==", user?.uid),
       );
       this.allHolidays$ = holidaysByUser.valueChanges();
     });
+    //this should be done via selectors but was giving me undefined errors
+  }
 
-    // this.allHolidays$ = this.store.select(selectHolidays);
+  @HostListener('window:resize', ['$event'])
+  onResize(event: unknown) {
+    if (window.screen.width < 600) { // 768px portrait
+      this.mobile = true;
+      console.log("mobile");
+    } else {
+      this.mobile = false;
+      console.log("desktop");
+    }
   }
 
   ngOnInit(): void {
     this.store.dispatch(loadHolidays());
+    this.onResize(null);
   }
 }

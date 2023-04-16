@@ -20,7 +20,8 @@ export class HolidayTabComponent implements OnInit {
   @Input() holiday: IHoliday | undefined;
   totalCost: number | undefined;
 
-  constructor(private router: Router, private store: Store<AppState>, private holidayService: HolidayService, private currencyService: CurrencyService) { }
+  constructor(private router: Router, private store: Store<AppState>, private holidayService: HolidayService, private currencyService: CurrencyService) {
+  }
 
   ngOnInit(): void {
     this.store.select(selectAllActivitiesSortedByDate).subscribe((activities) => {
@@ -31,6 +32,7 @@ export class HolidayTabComponent implements OnInit {
       this.totalCost = cost;
     }
     )
+    this.holidayService.setSelectedHoliday(this.holiday?.id || '');
   }
 
   openCalendar() {

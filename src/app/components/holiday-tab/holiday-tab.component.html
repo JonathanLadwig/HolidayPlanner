@@ -1,6 +1,6 @@
-<div class="holiday-tab mx-8">
-    <h2 class="text-xl">{{holiday?.name}}</h2>
-    <p class="text-md font-light italic">{{holiday?.description}}</p>
+<div class="holiday-tab mx-8 my-4" *ngIf="holiday">
+    <h2 class="text-xl">{{holiday.name}}</h2>
+    <p class="text-md font-light italic">{{holiday.description}}</p>
     <br>
     <p class="text-base ">Start Date: {{startDate | date }}</p>
     <p class="text-base ">End Date: {{endDate | date }}</p>
@@ -10,5 +10,5 @@
     <button nz-button nz-type="default" nz-popconfirm nzPopconfirmTitle="Are you sure delete this holiday?"
         nzPopconfirmPlacement="bottom" (nzOnConfirm)="confirmDelete()" (nzOnCancel)="cancelDelete()">Delete
         Holiday</button>
-    <app-holiday-viewer class=" flex justify-center w-full" />
+    <app-activity-list class=" flex justify-center w-full" />
 </div>

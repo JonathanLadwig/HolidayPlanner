@@ -34,7 +34,6 @@ export class CalendarComponent implements OnInit {
   ngOnInit(): void {
     const holidayID = this.holidayService.getSelectedHolidayID();
     this.store.dispatch(loadActivitiesByHolidayID({ idHoliday: holidayID }));
-    //
     this.store.select(selectAllActivitiesSortedByDateWithMonth(this.selectedDate)).subscribe((activities) => {
       this.listDataMap = activities;
     })

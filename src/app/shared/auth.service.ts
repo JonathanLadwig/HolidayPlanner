@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { setLoggedInUser } from '../Ngrx-store/Ngrx-actions/user.actions';
 import { AppState } from './app.state';
 
 @Injectable({
@@ -21,11 +20,6 @@ export class AuthService {
           if (user?.email && user?.displayName) {
             //set local persistence
             this.fireAuth.setPersistence('local');
-            this.store.dispatch(setLoggedInUser({
-              user: {
-                email: user.email, displayName: user.displayName, uid: user.uid
-              }
-            }));
           }
         });
         this.router.navigate(['dashboard']);
