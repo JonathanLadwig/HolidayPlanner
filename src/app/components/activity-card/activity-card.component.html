@@ -1,0 +1,127 @@
+<div class="text-sm mx-2">{{getDate(activity?.startDateTime) | date: 'short'}}</div>
+<div class="activityCard w-full rounded-xl border-2" [ngClass]="activity?.tag | lowercase">
+    <!-- Code for when closed -->
+    <div *ngIf="!isOpen" aria-label="press to open"
+        class="coloured-top h-12 rounded-xl p-2 flex flex-row justify-between items-center" (click)="toggle()">
+        <div class="flex flex-grid" [ngSwitch]="activity?.tag">
+            <!-- Flight Icon -->
+            <svg *ngSwitchCase="'Travel'" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                width="24px" fill="#FFFFFF">
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path
+                    d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" />
+            </svg>
+            <!-- Hiking Icon -->
+            <svg *ngSwitchCase="'Hiking'" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"
+                height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
+                <rect fill="none" height="24" width="24" />
+                <path
+                    d="M13.5,5.5c1.1,0,2-0.9,2-2s-0.9-2-2-2s-2,0.9-2,2S12.4,5.5,13.5,5.5z M17.5,10.78c-1.23-0.37-2.22-1.17-2.8-2.18l-1-1.6 c-0.41-0.65-1.11-1-1.84-1c-0.78,0-1.59,0.5-1.78,1.44S7,23,7,23h2.1l1.8-8l2.1,2v6h2v-7.5l-2.1-2l0.6-3c1,1.15,2.41,2.01,4,2.34V23 H19V9h-1.5L17.5,10.78z M7.43,13.13l-2.12-0.41c-0.54-0.11-0.9-0.63-0.79-1.17l0.76-3.93c0.21-1.08,1.26-1.79,2.34-1.58l1.16,0.23 L7.43,13.13z" />
+            </svg>
+            <!-- Food Icon -->
+            <svg *ngSwitchCase="'Food'" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                width="24px" fill="#FFFFFF">
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path
+                    d="M16 6v8h3v8h2V2c-2.76 0-5 2.24-5 4zm-5 3H9V2H7v7H5V2H3v7c0 2.21 1.79 4 4 4v9h2v-9c2.21 0 4-1.79 4-4V2h-2v7z" />
+            </svg>
+            <!-- Sightseeing Icon -->
+            <svg *ngSwitchCase="'Sightseeing'" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                width="24px" fill="#FFFFFF">
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path
+                    d="M14.12 4l1.83 2H20v12H4V6h4.05l1.83-2h4.24M15 2H9L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2zm-3 7c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3m0-2c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z" />
+            </svg>
+            <!-- Shopping Icon -->
+            <svg *ngSwitchCase="'Shopping'" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"
+                height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
+                <g>
+                    <rect fill="none" height="24" width="24" />
+                    <path
+                        d="M18 6h-2c0-2.21-1.79-4-4-4S8 3.79 8 6H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6-2c1.1 0 2 .9 2 2h-4c0-1.1.9-2 2-2zm6 16H6V8h2v2c0 .55.45 1 1 1s1-.45 1-1V8h4v2c0 .55.45 1 1 1s1-.45 1-1V8h2v12z" />
+                </g>
+            </svg>
+            <!-- Other Icon -->
+            <svg *ngSwitchCase="'Other'" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                width="24px" fill="#FFFFFF">
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path
+                    d="M22 10V6c0-1.1-.9-2-2-2H4c-1.1 0-1.99.9-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2zm-2-1.46c-1.19.69-2 1.99-2 3.46s.81 2.77 2 3.46V18H4v-2.54c1.19-.69 2-1.99 2-3.46 0-1.48-.8-2.77-1.99-3.46L4 6h16v2.54zM9.07 16L12 14.12 14.93 16l-.89-3.36 2.69-2.2-3.47-.21L12 7l-1.27 3.22-3.47.21 2.69 2.2z" />
+            </svg>
+            <h4 class="pl-1">{{activity?.name}}</h4>
+        </div>
+        <i nz-icon nzType="caret-down" nzTheme="outline" class="text-xl text-white"></i>
+    </div>
+    <!-- Code for when open -->
+    <div *ngIf="isOpen" aria-label="press to close"
+        class="coloured-top h-12 rounded-t-xl p-2 flex flex-row justify-between items-center" (click)="toggle()">
+        <div class="flex flex-grid" [ngSwitch]="activity?.tag">
+            <!-- Flight Icon -->
+            <svg *ngSwitchCase="'Travel'" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                width="24px" fill="#FFFFFF">
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path
+                    d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" />
+            </svg>
+            <!-- Hiking Icon -->
+            <svg *ngSwitchCase="'Hiking'" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"
+                height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
+                <rect fill="none" height="24" width="24" />
+                <path
+                    d="M13.5,5.5c1.1,0,2-0.9,2-2s-0.9-2-2-2s-2,0.9-2,2S12.4,5.5,13.5,5.5z M17.5,10.78c-1.23-0.37-2.22-1.17-2.8-2.18l-1-1.6 c-0.41-0.65-1.11-1-1.84-1c-0.78,0-1.59,0.5-1.78,1.44S7,23,7,23h2.1l1.8-8l2.1,2v6h2v-7.5l-2.1-2l0.6-3c1,1.15,2.41,2.01,4,2.34V23 H19V9h-1.5L17.5,10.78z M7.43,13.13l-2.12-0.41c-0.54-0.11-0.9-0.63-0.79-1.17l0.76-3.93c0.21-1.08,1.26-1.79,2.34-1.58l1.16,0.23 L7.43,13.13z" />
+            </svg>
+            <!-- Food Icon -->
+            <svg *ngSwitchCase="'Food'" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                width="24px" fill="#FFFFFF">
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path
+                    d="M16 6v8h3v8h2V2c-2.76 0-5 2.24-5 4zm-5 3H9V2H7v7H5V2H3v7c0 2.21 1.79 4 4 4v9h2v-9c2.21 0 4-1.79 4-4V2h-2v7z" />
+            </svg>
+            <!-- Sightseeing Icon -->
+            <svg *ngSwitchCase="'Sightseeing'" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                width="24px" fill="#FFFFFF">
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path
+                    d="M14.12 4l1.83 2H20v12H4V6h4.05l1.83-2h4.24M15 2H9L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2zm-3 7c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3m0-2c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z" />
+            </svg>
+            <!-- Shopping Icon -->
+            <svg *ngSwitchCase="'Shopping'" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"
+                height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
+                <g>
+                    <rect fill="none" height="24" width="24" />
+                    <path
+                        d="M18 6h-2c0-2.21-1.79-4-4-4S8 3.79 8 6H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6-2c1.1 0 2 .9 2 2h-4c0-1.1.9-2 2-2zm6 16H6V8h2v2c0 .55.45 1 1 1s1-.45 1-1V8h4v2c0 .55.45 1 1 1s1-.45 1-1V8h2v12z" />
+                </g>
+            </svg>
+            <!-- Other Icon -->
+            <svg *ngSwitchCase="'Other'" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                width="24px" fill="#FFFFFF">
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path
+                    d="M22 10V6c0-1.1-.9-2-2-2H4c-1.1 0-1.99.9-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2zm-2-1.46c-1.19.69-2 1.99-2 3.46s.81 2.77 2 3.46V18H4v-2.54c1.19-.69 2-1.99 2-3.46 0-1.48-.8-2.77-1.99-3.46L4 6h16v2.54zM9.07 16L12 14.12 14.93 16l-.89-3.36 2.69-2.2-3.47-.21L12 7l-1.27 3.22-3.47.21 2.69 2.2z" />
+            </svg>
+
+            <h4>{{activity?.name}}</h4>
+        </div>
+        <i nz-icon nzType="caret-up" nzTheme="outline" class="text-xl text-white"></i>
+    </div>
+    <div *ngIf="isOpen" [@openClose]="isOpen ? 'open' : 'closed'">
+        <div class="card-content px-2">
+            <p class="font-light">Description: {{activity?.description}}</p>
+            <p>Tag: {{activity?.tag}}</p>
+            <p>Price: {{(activity?.cost | currency : 'R')}}</p>
+            <p>Starts At: {{getDate(activity?.startDateTime) | date: 'd MMM YYYY H:mma'}}</p>
+            <p>Ends At: {{getDate(activity?.endDateTime) | date: 'd MMM YYYY H:mma'}}</p>
+        </div>
+        <div class="card-buttons flex justify-evenly ">
+            <button aria-label="delete activity" class="my-2" nz-button nzType="default" nz-popconfirm
+                nzPopconfirmTitle="Are you sure delete this activity?" nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="confirmDelete()" (nzOnCancel)="cancelDelete()">
+                Delete Activity
+            </button>
+            <button aria-label="edit activity" class="my-2" nz-button nzType="default" (click)="editActivity()">
+                Edit Activity
+            </button>
+        </div>
+    </div>
+</div>

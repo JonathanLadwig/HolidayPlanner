@@ -1,0 +1,13 @@
+<div class="activity-card-list w-full px-8">
+    <h2 class="text-lg align-middle">Holiday Itinerary:</h2>
+    <ng-container *ngIf="(allActivities$| async) as activities">
+        <div *ngFor="let activity of activities" class="activity my-2">
+            <app-activity-card [activity]="activity" />
+        </div>
+    </ng-container>
+    <button
+        class="w-full h-12 text-slate-600 border border-slate-600 hover:bg-slate-600 hover:text-white active:bg-slate-600 font-bold uppercase py-3 rounded-xl outline-none focus:outline-none my-2"
+        type="button" aria-label="Add Activity" (click)="addNewActivity()">
+        + Add Activity
+    </button>
+</div>

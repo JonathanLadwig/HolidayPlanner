@@ -3,7 +3,10 @@
   "version": 1,
   "cli": {
     "packageManager": "npm",
-    "analytics": "d3320b22-df4b-4165-9b2c-7a9c27f2176d"
+    "analytics": "d3320b22-df4b-4165-9b2c-7a9c27f2176d",
+    "schematicCollections": [
+      "@ngrx/schematics"
+    ]
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -50,8 +53,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "3mb"
                 },
                 {
                   "type": "anyComponentStyle",

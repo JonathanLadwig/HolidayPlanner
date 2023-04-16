@@ -1,0 +1,70 @@
+<form nz-form [formGroup]="validateEditForm" (ngSubmit)="submitForm()" class="activity-form py-4 px-8">
+    <!-- Name -->
+    <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Activity-Name</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">
+            <input style="width: 12rem;" nz-input formControlName="activityName" />
+        </nz-form-control>
+    </nz-form-item>
+    <!-- Description -->
+    <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24">Activity-Description</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">
+            <textarea style="width: 12rem;" nz-input formControlName="activityDescription"></textarea>
+        </nz-form-control>
+    </nz-form-item>
+    <!-- Tag -->
+    <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Tag</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">
+            <nz-select style="width: 12rem;" formControlName="tag">
+                <nz-option *ngFor="let option of tagOptions" [nzLabel]="option" [nzValue]="option"></nz-option>
+            </nz-select>
+        </nz-form-control>
+    </nz-form-item>
+    <!-- Date -->
+    <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>DatePicker</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">
+            <nz-date-picker formControlName="datePicker"></nz-date-picker>
+        </nz-form-control>
+    </nz-form-item>
+    <!-- Time -->
+    <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Start-Time</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">
+            <nz-time-picker nzFormat="HH:mm" formControlName="startTimePicker"></nz-time-picker>
+        </nz-form-control>
+    </nz-form-item>
+    <!-- EndTime -->
+    <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>End-Time</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">
+            <nz-time-picker nzFormat="HH:mm" formControlName="endTimePicker"></nz-time-picker>
+        </nz-form-control>
+    </nz-form-item>
+    <!-- Total-Cost -->
+    <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24">Total-Cost</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">
+            <nz-input-number-group style="width: auto; padding-right: 3rem;">
+                <nz-input-number [nzStep]="0.01" [nzMin]="0" style="width: 6rem;" formControlName="totalCost" />
+            </nz-input-number-group>
+        </nz-form-control>
+    </nz-form-item>
+    <!-- Currency -->
+    <nz-form-item>
+        <nz-form-label nzRequired [nzSm]="8" [nzXs]="24">Currency</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">
+            <nz-select style="width: 12rem;" formControlName="currency" nzShowSearch nzAllowClear>
+                <nz-option *ngFor="let option of currencies" [nzLabel]="option" [nzValue]="option"></nz-option>
+            </nz-select>
+        </nz-form-control>
+    </nz-form-item>
+    <!-- Submit -->
+    <nz-form-item>
+        <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 16, offset: 8 }">
+            <button nz-button nzType="primary">Submit</button>
+        </nz-form-control>
+    </nz-form-item>
+</form>
