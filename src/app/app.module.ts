@@ -26,6 +26,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
@@ -42,15 +43,15 @@ import { ActivityComponent } from './components/activity-list/activity.component
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { CreateNewActivityFormComponent } from './components/create-new-activity-form/create-new-activity-form.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { EditActivityFormComponent } from './components/edit-activity-form/edit-activity-form.component';
 import { HolidayTabComponent } from './components/holiday-tab/holiday-tab.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
 import { LoginComponent } from './components/login/login.component';
 import { NewHolidayTabComponent } from './components/new-holiday-tab/new-holiday-tab.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthService } from './shared/auth.service';
-import { EditActivityFormComponent } from './components/edit-activity-form/edit-activity-form.component';
-import { HomePageComponent } from './components/home-page/home-page.component';
 
-// rome-ignore lint/suspicious/noExplicitAny: <explanation>
+// rome-ignore lint/suspicious/noExplicitAny: <explanation I don't know what comes out>
 export const metaReducers: MetaReducer<any>[] = [debug];
 // rome-ignore lint/suspicious/noExplicitAny: <explanation>
 export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
@@ -105,6 +106,7 @@ registerLocaleData(en);
     NzTabsModule,
     NzPopconfirmModule,
     NzMessageModule,
+    NzNotificationModule,
     EffectsModule.forRoot([]),
     StoreModule.forRoot({}, { metaReducers }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),

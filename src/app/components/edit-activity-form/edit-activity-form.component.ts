@@ -102,6 +102,7 @@ export class EditActivityFormComponent implements OnInit {
     this.store.dispatch(addActivity({ newActivity: updatedActivity }));
     //then update the activity in the database
     this.activityService.updateActivity(updatedActivity);
+    this.router.navigate(['dashboard']);
   }
 
 }

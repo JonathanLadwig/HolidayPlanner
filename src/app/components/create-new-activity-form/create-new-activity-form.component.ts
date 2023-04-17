@@ -3,6 +3,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from "@ngrx/store";
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { Observable } from 'rxjs';
 import { addActivity } from 'src/app/Ngrx-store/Ngrx-actions/activity.actions';
 import { ActivityService } from 'src/app/services/activity.service';
 import { CurrencyService } from 'src/app/services/currency.service';
@@ -22,11 +24,29 @@ export class CreateNewActivityFormComponent {
   chosenCurrency: string = 'ZAR';
   currencyOptions$ = this.currencyService.getSupportedCurrencies();
   currencies: string[] = [];
+  successful: boolean | undefined;
 
-  constructor(private fb: UntypedFormBuilder, private store: Store<AppState>, private readonly afs: AngularFirestore, private activityService: ActivityService, private holidayService: HolidayService, private router: Router, private currencyService: CurrencyService) {
+  constructor(private fb: UntypedFormBuilder,
+    private store: Store<AppState>,
+    private readonly afs: AngularFirestore,
+    private activityService: ActivityService,
+    private holidayService: HolidayService,
+    private router: Router,
+    private currencyService: CurrencyService,
+    private notification: NzNotificationService) {
     this.currencyOptions$.subscribe(data => {
       this.currencies = Object.keys(data.symbols) as string[];
+      this.successful = false;
     })
+  }
+
+  beforeConfirm(): Observable<boolean> {
+    return new Observable(observer => {
+      setTimeout(() => {
+        observer.next(true);
+        observer.complete();
+      }, 3000);
+    });
   }
 
   submitForm(): void {
@@ -68,10 +88,12 @@ export class CreateNewActivityFormComponent {
         }
       });
       alert('Please fill in all required fields');
+      this.successful = false;
     }
   }
 
   ngOnInit(): void {
+    this.successful = false;
     this.validateForm = this.fb.group({
       activityName: [null, Validators.required],
       activityDescription: [null],
@@ -89,14 +111,17 @@ export class CreateNewActivityFormComponent {
     this.validateForm.reset();
     this.store.dispatch(addActivity({ newActivity: activity }));
     this.activityService.addActivity(activity);
+    this.successful = true;
+    this.createSuccessNotification();
+    this.router.navigate(['dashboard']);
   }
 
-  createAnother() {
-    this.submitForm();
-  }
-  goToDashboard() {
-    this.submitForm();
-    this.router.navigate(['dashboard']);
+  createSuccessNotification(): void {
+    this.notification
+      .blank(
+        'Success',
+        'We added the activity to your holiday!'
+      )
   }
 
 }
