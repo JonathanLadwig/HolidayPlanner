@@ -9,21 +9,3 @@
         <app-activity-card [activity]="activity" />
     </div>
 </div>
-
-<!-- <nz-calendar [(ngModel)]="selectedDate" [(nzMode)]="mode" (nzSelectChange)="selectChange($event)"
-    (nzPanelChange)="panelChange($event)">
-
-    <ul *nzDateCell="let date" class="events">
-        <ng-container [ngSwitch]="date.getDate()">
-            <div *ngFor="let date of daysInMonth">
-                <ng-container *ngSwitchCase="daysInMonth">
-                    <li *ngFor="let item of listDataMap">
-                        <div *ngIf="getDateFromFS(item.startDateTime)">
-                            <nz-badge nzStatus="success" [nzText]="item.name"></nz-badge>
-                        </div>
-                    </li>
-                </ng-container>
-            </div>
-        </ng-container>
-    </ul>
-</nz-calendar> -->

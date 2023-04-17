@@ -1,9 +1,9 @@
 <div class="mx-8 my-2 pb-4">
     <h2 class="text-xl font-bold">
-        Upcoming Activities:
+        Upcoming Activities
     </h2>
     <br>
-    <h3 class="text-lg">Today</h3>
+    <h3 class="text-lg">Today:</h3>
     <ng-container *ngIf="(todaysActivities$| async) as todaysactivities">
         <div *ngFor="let activity of todaysactivities" class="activity-list my-2">
             <app-activity-card [activity]="activity" />
@@ -12,7 +12,7 @@
     <ng-template></ng-template>
 
     <br>
-    <h3 class="text-lg">Tomorrow</h3>
+    <h3 class="text-lg">Tomorrow:</h3>
     <ng-container *ngIf="(tomorrowsActivities$| async) as tomorrowsactivities">
         <div *ngFor="let activity of tomorrowsactivities" class="activity-list my-2">
             <app-activity-card [activity]="activity" />

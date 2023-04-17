@@ -63,15 +63,25 @@ export class EditActivityFormComponent implements OnInit {
 
   submitForm() {
     if (this.validateEditForm.valid && this.oldActivity?.id && this.oldActivity?.fkHolidayID) {
-      const activityStartDateTime = new Date(this.validateEditForm.value.startTimePicker);
-      const activityEndDateTime = new Date(this.validateEditForm.value.endTimePicker);
+      const activityStartDateTime = new Date((this.validateEditForm.value.startTimePicker));
+      const activityEndDateTime = new Date((this.validateEditForm.value.endTimePicker));
       const chosenDate = new Date(this.validateEditForm.value.datePicker);
 
       if (activityEndDateTime > activityStartDateTime) {
+        activityStartDateTime.setFullYear(chosenDate.getFullYear());
+        activityStartDateTime.setMonth(chosenDate.getMonth());
         activityStartDateTime.setDate(chosenDate.getDate());
+
+        activityEndDateTime.setFullYear(chosenDate.getFullYear());
+        activityEndDateTime.setMonth(chosenDate.getMonth());
         activityEndDateTime.setDate(chosenDate.getDate());
       } else {
+        activityStartDateTime.setFullYear(chosenDate.getFullYear());
+        activityStartDateTime.setMonth(chosenDate.getMonth());
         activityStartDateTime.setDate(chosenDate.getDate());
+
+        activityEndDateTime.setFullYear(chosenDate.getFullYear());
+        activityEndDateTime.setMonth(chosenDate.getMonth());
         activityEndDateTime.setDate(chosenDate.getDate() + 1);
       }
 

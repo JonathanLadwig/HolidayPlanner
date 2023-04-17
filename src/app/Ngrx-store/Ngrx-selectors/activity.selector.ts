@@ -24,7 +24,7 @@ export const selectAllActivitiesSortedByDate = createSelector(
           const timestampB = b.startDateTime as unknown as Timestamp
           const dateA = new Date(timestampA.seconds * 1000);
           const dateB = new Date(timestampB.seconds * 1000);
-          return (dateA.getDate() - dateB.getDate() || dateA.getTime() - dateB.getTime());
+          return (dateA.getFullYear() - dateB.getFullYear() || dateA.getMonth() - dateB.getMonth() || dateA.getDate() - dateB.getDate() || dateA.getTime() - dateB.getTime());
         }
         return 0
       })

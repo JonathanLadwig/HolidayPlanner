@@ -21,7 +21,6 @@ export class HolidayEffects {
           switchMap(
             () =>
               this.holidayService.getHolidays().pipe(
-                tap((holidays) => console.log(holidays)),
                 map((holidays: IHoliday[]) => HolidayActions.loadHolidaysSuccess({ holidays })),//end of map
                 catchError(error => {
                   console.log("Hi, yeah we have problems...")
@@ -31,7 +30,7 @@ export class HolidayEffects {
               )//end of holiday-viewer service pipe
           )//end of switch map
         )//end of action obs watcher
-    )//end of create effect
+    );//end of create effect
 
   //set the selected holiday ID in service
   setSelectedHolidayID$ =
@@ -42,11 +41,5 @@ export class HolidayEffects {
           tap((action) => this.holidayService.setSelectedHoliday(action.idHoliday))
         ),
       { dispatch: false }
-    )
-
-  //add new holiday
-
-  //delete holiday
-
-  //update holiday
+    );
 }

@@ -108,6 +108,7 @@
     <div *ngIf="isOpen" [@openClose]="isOpen ? 'open' : 'closed'">
         <div class="card-content px-2">
             <p class="font-light">Description: {{activity?.description}}</p>
+            <div class="py-1"></div>
             <p>Tag: {{activity?.tag}}</p>
             <p>Price: {{(activity?.cost | currency : 'R')}}</p>
             <p>Starts At: {{getDate(activity?.startDateTime) | date: 'd MMM YYYY H:mma'}}</p>
@@ -120,7 +121,7 @@
                 Delete Activity
             </button>
             <button aria-label="edit activity" class="my-2" nz-button nzType="default" (click)="editActivity()">
-                Edit Activity
+                Update Activity
             </button>
         </div>
     </div>

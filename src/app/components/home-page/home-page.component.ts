@@ -21,7 +21,6 @@ export class HomePageComponent {
 
   constructor(private store: Store<AppState>) {
     this.store.dispatch(loadActivities());
-    console.log("This is todays date", this.todaysDate);
     this.todaysActivities$ = this.store.select(selectAllActivitiesSortedByDateWithDate(this.todaysDate));
     this.tomorrowsActivities$ = this.store.select(selectAllActivitiesSortedByDateWithDate(this.tomorrowsDate));
   }
