@@ -6,20 +6,23 @@
 
 .hiking {
   .coloured-top {
-    background-color: #3fa34d;
+    background-color: #34853f;
+    // 3fa34d shamrock (fails contrast)
   }
 }
 
 .food {
   .coloured-top {
-    background-color: #ef476f;
+    background-color: #bf3656;
     // E40066 razzmatazz
+    // ef476f flamingo (fails contrast)
   }
 }
 
 .sightseeing {
   .coloured-top {
-    background-color: #f08700;
+    background-color: #e05f19;
+    // f08700 tangerine (fails contrast)
   }
 }
 

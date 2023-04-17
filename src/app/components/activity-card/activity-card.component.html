@@ -1,4 +1,4 @@
-<div class="text-sm mx-2">{{getDate(activity?.startDateTime) | date: 'short'}}</div>
+<div class="text-sm mx-2 text-gray-500">{{getDate(activity?.startDateTime) | date: 'short'}}</div>
 <div class="activityCard w-full rounded-xl border-2" [ngClass]="activity?.tag | lowercase">
     <!-- Code for when closed -->
     <div *ngIf="!isOpen" aria-label="press to open"

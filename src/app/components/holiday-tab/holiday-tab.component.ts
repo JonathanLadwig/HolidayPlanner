@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 import { deleteHoliday } from 'src/app/Ngrx-store/Ngrx-actions/holiday.actions';
 import { getHolidayTotalCost, selectAllActivitiesSortedByDate } from 'src/app/Ngrx-store/Ngrx-selectors/activity.selector';
 import { IHoliday } from 'src/app/models/Trip';
-import { CurrencyService } from 'src/app/services/currency.service';
 import { HolidayService } from 'src/app/services/holiday.service';
 import { AppState } from 'src/app/shared/app.state';
 import { getDateFromFS } from 'src/app/shared/getDateFromFirestoreDate';
@@ -20,7 +19,7 @@ export class HolidayTabComponent implements OnInit {
   @Input() holiday: IHoliday | undefined;
   totalCost: number | undefined;
 
-  constructor(private router: Router, private store: Store<AppState>, private holidayService: HolidayService, private currencyService: CurrencyService) {
+  constructor(private router: Router, private store: Store<AppState>, private holidayService: HolidayService) {
   }
 
   ngOnInit(): void {
@@ -46,6 +45,7 @@ export class HolidayTabComponent implements OnInit {
 
   cancelDelete() {
   }
+
   confirmDelete() {
     this.store.dispatch(deleteHoliday({ idHoliday: this.holiday?.id || '' }));
     this.holidayService.deleteHoliday(this.holiday?.id || '');

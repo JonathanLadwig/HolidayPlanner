@@ -48,6 +48,4 @@ export class RegisterComponent implements OnInit {
   goBack() {
     this.router.navigate(['login']);
   }
-
-  // this.auth.register(this.email, this.password, this.displayName);
 }

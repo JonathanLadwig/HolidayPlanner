@@ -87,7 +87,7 @@ export class CreateNewActivityFormComponent {
           control.updateValueAndValidity({ onlySelf: true });
         }
       });
-      alert('Please fill in all required fields');
+      this.createErrorNotification();
       this.successful = false;
     }
   }
@@ -119,8 +119,18 @@ export class CreateNewActivityFormComponent {
   createSuccessNotification(): void {
     this.notification
       .blank(
-        'Success',
-        'We added the activity to your holiday!'
+        'SUCCESS',
+        'We added the activity to your holiday!',
+        { nzDuration: 3000, nzPlacement: 'top' }
+      )
+  }
+
+  createErrorNotification(): void {
+    this.notification
+      .blank(
+        'FAILURE',
+        'Please fill in all required fields!',
+        { nzDuration: 3000, nzPlacement: 'top' }
       )
   }
 

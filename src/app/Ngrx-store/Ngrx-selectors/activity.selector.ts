@@ -10,6 +10,8 @@ export const selectActivityState = createFeatureSelector<ActivityState>(
 //gets all the activities from the state
 export const selectActivities = (state: ActivityState) => state.activities;
 
+export const getStatus = (state: ActivityState) => state.status;
+
 //gets all the activities from the state and sorts them by date
 export const selectAllActivitiesSortedByDate = createSelector(
   selectActivityState,

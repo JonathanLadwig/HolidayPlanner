@@ -4,11 +4,11 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { toDate } from 'date-fns';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { addActivity, deleteActivity } from 'src/app/Ngrx-store/Ngrx-actions/activity.actions';
 import { IActivity } from 'src/app/models/Trip';
 import { ActivityService } from 'src/app/services/activity.service';
 import { CurrencyService } from 'src/app/services/currency.service';
-import { HolidayService } from 'src/app/services/holiday.service';
 import { AppState } from 'src/app/shared/app.state';
 import { getDateFromFS } from 'src/app/shared/getDateFromFirestoreDate';
 
@@ -25,7 +25,14 @@ export class EditActivityFormComponent implements OnInit {
   currencyOptions$ = this.currencyService.getSupportedCurrencies();
   currencies: string[] = [];
 
-  constructor(private fb: UntypedFormBuilder, private store: Store<AppState>, private readonly afs: AngularFirestore, private activityService: ActivityService, private holidayService: HolidayService, private router: Router, private currencyService: CurrencyService) {
+  constructor(
+    private fb: UntypedFormBuilder,
+    private store: Store<AppState>,
+    private readonly afs: AngularFirestore,
+    private activityService: ActivityService,
+    private router: Router,
+    private currencyService: CurrencyService,
+    private notification: NzNotificationService) {
     this.currencyOptions$.subscribe(data => {
       this.currencies = Object.keys(data.symbols) as string[];
     })
@@ -75,7 +82,7 @@ export class EditActivityFormComponent implements OnInit {
           fkHolidayID: this.oldActivity?.fkHolidayID || '',
           name: this.validateEditForm.value.activityName,
           description: this.validateEditForm.value.activityDescription || '',
-          cost: data.result,
+          cost: Math.round((data.result * 100) / 100),
           currency: this.validateEditForm.value.currency,
           tag: this.validateEditForm.value.tag,
           startDateTime: activityStartDateTime,
@@ -91,7 +98,7 @@ export class EditActivityFormComponent implements OnInit {
           control.updateValueAndValidity({ onlySelf: true });
         }
       });
-      alert('Please fill in all required fields');
+      this.editErrorNotification();
     }
   }
 
@@ -102,7 +109,27 @@ export class EditActivityFormComponent implements OnInit {
     this.store.dispatch(addActivity({ newActivity: updatedActivity }));
     //then update the activity in the database
     this.activityService.updateActivity(updatedActivity);
+    this.editSuccessNotification();
     this.router.navigate(['dashboard']);
+  }
+
+  editSuccessNotification(): void {
+    this.notification
+      .blank(
+        'SUCCESS',
+        "We've updated the activity with all your changes!",
+        { nzDuration: 3000, nzPlacement: 'top' }
+
+      )
+  }
+
+  editErrorNotification(): void {
+    this.notification
+      .blank(
+        'FAILURE',
+        'Please fill in all required fields!',
+        { nzDuration: 3000, nzPlacement: 'top' }
+      )
   }
 
 }
