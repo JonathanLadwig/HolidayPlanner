@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { PERSISTENCE } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { loadActivities } from 'src/app/Ngrx-store/Ngrx-actions/activity.actions';
+import { loadHolidays } from 'src/app/Ngrx-store/Ngrx-actions/holiday.actions';
+import { AppState } from 'src/app/shared/app.state';
 import { AuthService } from 'src/app/shared/auth.service';
 
 
@@ -15,13 +19,15 @@ export class LoginComponent implements OnInit {
   email = '';
   password = '';
 
-  constructor(public auth: AuthService, public router: Router) { }
+  constructor(public auth: AuthService, public router: Router, private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    //fire if user is already logged in to send to dashboard automatically
+    //fire if user is already logged in to send to landing automatically
     this.auth.fireAuth.onAuthStateChanged(user => {
       if (user) {
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['landing']);
+        this.store.dispatch(loadActivities())
+        this.store.dispatch(loadHolidays())
       }
     }
     );
@@ -41,12 +47,3 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['register']);
   }
 }
-
-    // this.auth.fireAuth.currentUser.then(user => {
-    //   console.log("firing now")
-    //   if (!user) {
-    //     console.log("already logged in");
-    //     this.router.navigate(['dashboard']);
-    //   }
-    // }
-    // );

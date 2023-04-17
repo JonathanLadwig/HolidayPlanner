@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { loadActivities } from '../Ngrx-store/Ngrx-actions/activity.actions';
+import { loadHolidays } from '../Ngrx-store/Ngrx-actions/holiday.actions';
 import { AppState } from './app.state';
 
 @Injectable({
@@ -22,7 +24,9 @@ export class AuthService {
             this.fireAuth.setPersistence('local');
           }
         });
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['landing']);
+        this.store.dispatch(loadActivities())
+        this.store.dispatch(loadHolidays())
       }, error => {
         alert(error.message);
       })
@@ -37,7 +41,9 @@ export class AuthService {
             displayName: displayName
           });
           this.fireAuth.setPersistence('local');
-          this.router.navigate(['dashboard']);
+          this.router.navigate(['landing']);
+          this.store.dispatch(loadActivities())
+          this.store.dispatch(loadHolidays())
         });
       }, error => {
         alert(error.message);

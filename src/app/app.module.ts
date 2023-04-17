@@ -48,6 +48,7 @@ import { NewHolidayTabComponent } from './components/new-holiday-tab/new-holiday
 import { RegisterComponent } from './components/register/register.component';
 import { AuthService } from './shared/auth.service';
 import { EditActivityFormComponent } from './components/edit-activity-form/edit-activity-form.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
 
 // rome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const metaReducers: MetaReducer<any>[] = [debug];
@@ -76,7 +77,8 @@ registerLocaleData(en);
     ActivityComponent,
     NewHolidayTabComponent,
     HolidayTabComponent,
-    EditActivityFormComponent
+    EditActivityFormComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,

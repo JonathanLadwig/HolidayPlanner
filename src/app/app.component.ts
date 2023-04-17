@@ -20,6 +20,10 @@ export class AppComponent {
     this.router.navigate(['dashboard']);
   }
 
+  goToLanding() {
+    this.router.navigate(['landing']);
+  }
+
   goToCalendar() {
     this.router.navigate(['calendar']);
   }

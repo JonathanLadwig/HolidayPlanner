@@ -26,7 +26,6 @@ export class CalendarComponent implements OnInit {
   }
 
   selectChange($event: Date) {
-    console.log($event);
     this.selectedDate = $event;
     this.getActivitiesByDate();
   }

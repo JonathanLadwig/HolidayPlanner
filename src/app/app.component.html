@@ -1,13 +1,22 @@
 <div class="relative h-full">
     <nav class="h-12 w-full sticky top-0 left-0 flex justify-between items-center bg-primary z-10 text-white px-6">
-        <button aria-label="go to dashboard" (click)="goToDashboard()">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
-                <path d="M0 0h24v24H0V0z" fill="none" />
-                <path d="M12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" />
-            </svg>
-        </button>
-        <h2 class="text-white">Welcome</h2>
-        <button aria-label="log out" (click)="logOut()">
+        <div class="">
+            <button class="" aria-label="go to landing page" (click)="goToLanding()">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
+                    <path d="M0 0h24v24H0V0z" fill="none" />
+                    <path d="M12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" />
+                </svg>
+            </button>
+            <button class="ml-6" aria-label="go to dashboard" (click)="goToDashboard()">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
+                    <path d="M0 0h24v24H0V0z" fill="none" />
+                    <path
+                        d="M19 5v2h-4V5h4M9 5v6H5V5h4m10 8v6h-4v-6h4M9 17v2H5v-2h4M21 3h-8v6h8V3zM11 3H3v10h8V3zm10 8h-8v10h8V11zm-10 4H3v6h8v-6z" />
+                </svg>
+            </button>
+        </div>
+        <h2 class="text-white">Holiday Planner</h2>
+        <button class="ml-8" aria-label="log out" (click)="logOut()">
             <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24"
                 width="24px" fill="#FFFFFF">
                 <g>
