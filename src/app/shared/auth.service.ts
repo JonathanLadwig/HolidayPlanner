@@ -53,4 +53,14 @@ export class AuthService {
     this.fireAuth.signOut();
   }
 
+
+  checkIfLoggedIn() {
+    this.fireAuth.onAuthStateChanged(user => {
+      if (user) {
+        this.router.navigate(['landing']);
+      }
+    }
+    );
+  }
+
 }

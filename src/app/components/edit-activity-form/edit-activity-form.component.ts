@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { toDate } from 'date-fns';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { addActivity, deleteActivity } from 'src/app/Ngrx-store/Ngrx-actions/activity.actions';
 import { IActivity } from 'src/app/models/Trip';
 import { ActivityService } from 'src/app/services/activity.service';
@@ -29,11 +27,9 @@ export class EditActivityFormComponent implements OnInit {
   constructor(
     private fb: UntypedFormBuilder,
     private store: Store<AppState>,
-    private readonly afs: AngularFirestore,
     private activityService: ActivityService,
     private router: Router,
     private currencyService: CurrencyService,
-    private notification: NzNotificationService,
     private message: NzMessageService) {
     this.currencyOptions$.subscribe(data => {
       this.currencies = Object.keys(data.symbols) as string[];
@@ -59,7 +55,7 @@ export class EditActivityFormComponent implements OnInit {
     }
 
     this.currencyService.convertCurrencies('ZAR', this.oldActivity?.currency || 'ZAR', this.oldActivity?.cost || 0).subscribe(data => {
-      this.validateEditForm.controls['totalCost'].setValue(data.result);
+      this.validateEditForm.controls['totalCost'].setValue(Math.round(data.result * 100) / 100);
     })
   }
 
@@ -134,24 +130,5 @@ export class EditActivityFormComponent implements OnInit {
   createErrorMessage() {
     this.message.create('error', "Please fill in all required fields");
   }
-
-  // editSuccessNotification(): void {
-  //   this.notification
-  //     .blank(
-  //       'SUCCESS',
-  //       "We've updated the activity with all your changes!",
-  //       { nzDuration: 3000, nzPlacement: 'top' }
-
-  //     )
-  // }
-
-  // editErrorNotification(): void {
-  //   this.notification
-  //     .blank(
-  //       'FAILURE',
-  //       'Please fill in all required fields!',
-  //       { nzDuration: 3000, nzPlacement: 'top' }
-  //     )
-  // }
 
 }

@@ -21,3 +21,8 @@ export const getHolidayIDs = createSelector(
   selectHolidayState,
   (state: HolidayState) => state.holidays.map(holiday => holiday.id)
 )
+
+export const getHolidayStatus = createSelector(
+  selectHolidayState,
+  (state: HolidayState) => state.status
+)

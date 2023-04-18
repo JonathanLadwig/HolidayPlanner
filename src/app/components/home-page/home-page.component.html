@@ -3,21 +3,28 @@
         Upcoming Activities
     </h2>
     <br>
-    <h3 class="text-lg">Today:</h3>
-    <ng-container *ngIf="(todaysActivities$| async) as todaysactivities">
-        <div *ngFor="let activity of todaysactivities" class="activity-list my-2">
-            <app-activity-card [activity]="activity" />
-        </div>
-    </ng-container>
-    <ng-template></ng-template>
-
-    <br>
-    <h3 class="text-lg">Tomorrow:</h3>
-    <ng-container *ngIf="(tomorrowsActivities$| async) as tomorrowsactivities">
-        <div *ngFor="let activity of tomorrowsactivities" class="activity-list my-2">
-            <app-activity-card [activity]="activity" />
-        </div>
-    </ng-container>
+    <div class="w-full h-screen flex justify-center items-center text-4xl"
+        *ngIf="(holidayStatus$ | async) === 'loading'">
+        <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+    </div>
+    <div *ngIf="(holidayStatus$ | async) === 'success'">
+        <h3 class="text-lg">Today:</h3>
+        <ng-container *ngIf="(todaysActivities$| async) as todaysactivities">
+            <div *ngFor="let activity of todaysactivities" class="activity-list my-2">
+                <app-activity-card [activity]="activity" />
+            </div>
+        </ng-container>
+        <br>
+        <h3 class="text-lg">Tomorrow:</h3>
+        <ng-container *ngIf="(tomorrowsActivities$| async) as tomorrowsactivities">
+            <div *ngFor="let activity of tomorrowsactivities" class="activity-list my-2">
+                <app-activity-card [activity]="activity" />
+            </div>
+        </ng-container>
+    </div>
+    <div *ngIf="(holidayStatus$ | async) === 'error'">
+        <h3 class="text-lg">Error loading activities!!!</h3>
+    </div>
     <!-- Leaflet map -->
     <!-- <app-leaflet-map class="map-container h-64 w-full" leaflet (leafletMapReady)="onMapReady($event)"
         [activities]="(allActivities$ | async) || []" [inputMode]="false"></app-leaflet-map> -->
