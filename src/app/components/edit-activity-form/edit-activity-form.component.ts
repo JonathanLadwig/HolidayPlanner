@@ -4,6 +4,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { toDate } from 'date-fns';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { addActivity, deleteActivity } from 'src/app/Ngrx-store/Ngrx-actions/activity.actions';
 import { IActivity } from 'src/app/models/Trip';
@@ -32,7 +33,8 @@ export class EditActivityFormComponent implements OnInit {
     private activityService: ActivityService,
     private router: Router,
     private currencyService: CurrencyService,
-    private notification: NzNotificationService) {
+    private notification: NzNotificationService,
+    private message: NzMessageService) {
     this.currencyOptions$.subscribe(data => {
       this.currencies = Object.keys(data.symbols) as string[];
     })
@@ -108,7 +110,8 @@ export class EditActivityFormComponent implements OnInit {
           control.updateValueAndValidity({ onlySelf: true });
         }
       });
-      this.editErrorNotification();
+      // this.editErrorNotification();
+      this.createErrorMessage();
     }
   }
 
@@ -119,27 +122,36 @@ export class EditActivityFormComponent implements OnInit {
     this.store.dispatch(addActivity({ newActivity: updatedActivity }));
     //then update the activity in the database
     this.activityService.updateActivity(updatedActivity);
-    this.editSuccessNotification();
+    // this.editSuccessNotification();
+    this.createSuccessMessage();
     this.router.navigate(['dashboard']);
   }
 
-  editSuccessNotification(): void {
-    this.notification
-      .blank(
-        'SUCCESS',
-        "We've updated the activity with all your changes!",
-        { nzDuration: 3000, nzPlacement: 'top' }
-
-      )
+  createSuccessMessage() {
+    this.message.create('success', "We've updated the activity with all your changes");
   }
 
-  editErrorNotification(): void {
-    this.notification
-      .blank(
-        'FAILURE',
-        'Please fill in all required fields!',
-        { nzDuration: 3000, nzPlacement: 'top' }
-      )
+  createErrorMessage() {
+    this.message.create('error', "Please fill in all required fields");
   }
+
+  // editSuccessNotification(): void {
+  //   this.notification
+  //     .blank(
+  //       'SUCCESS',
+  //       "We've updated the activity with all your changes!",
+  //       { nzDuration: 3000, nzPlacement: 'top' }
+
+  //     )
+  // }
+
+  // editErrorNotification(): void {
+  //   this.notification
+  //     .blank(
+  //       'FAILURE',
+  //       'Please fill in all required fields!',
+  //       { nzDuration: 3000, nzPlacement: 'top' }
+  //     )
+  // }
 
 }

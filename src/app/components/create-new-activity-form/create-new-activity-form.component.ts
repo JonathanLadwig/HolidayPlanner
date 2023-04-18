@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from "@ngrx/store";
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Observable } from 'rxjs';
 import { addActivity } from 'src/app/Ngrx-store/Ngrx-actions/activity.actions';
@@ -33,7 +34,8 @@ export class CreateNewActivityFormComponent {
     private holidayService: HolidayService,
     private router: Router,
     private currencyService: CurrencyService,
-    private notification: NzNotificationService) {
+    private notification: NzNotificationService,
+    private message: NzMessageService) {
     this.currencyOptions$.subscribe(data => {
       this.currencies = Object.keys(data.symbols) as string[];
       this.successful = false;
@@ -87,7 +89,8 @@ export class CreateNewActivityFormComponent {
           control.updateValueAndValidity({ onlySelf: true });
         }
       });
-      this.createErrorNotification();
+      // this.createErrorNotification();
+      this.createErrorMessage();
       this.successful = false;
     }
   }
@@ -112,27 +115,36 @@ export class CreateNewActivityFormComponent {
     this.store.dispatch(addActivity({ newActivity: activity }));
     this.activityService.addActivity(activity);
     this.successful = true;
-    this.createSuccessNotification();
+    // this.createSuccessNotification();
+    this.createSuccessMessage();
     this.router.navigate(['dashboard']);
   }
 
-  createSuccessNotification(): void {
-    this.notification
-      .blank(
-        'SUCCESS',
-        'We added the activity to your holiday!',
-        { nzDuration: 3000, nzPlacement: 'top' }
-      )
+  createSuccessMessage() {
+    this.message.create('success', "We added the activity to your holiday");
   }
 
-  createErrorNotification(): void {
-    this.notification
-      .blank(
-        'FAILURE',
-        'Please fill in all required fields!',
-        { nzDuration: 3000, nzPlacement: 'top' }
-      )
+  createErrorMessage() {
+    this.message.create('error', "Please fill in all required fields");
   }
+
+  // createSuccessNotification(): void {
+  //   this.notification
+  //     .blank(
+  //       'SUCCESS',
+  //       'We added the activity to your holiday!',
+  //       { nzDuration: 3000, nzPlacement: 'top' }
+  //     )
+  // }
+
+  // createErrorNotification(): void {
+  //   this.notification
+  //     .blank(
+  //       'FAILURE',
+  //       'Please fill in all required fields!',
+  //       { nzDuration: 3000, nzPlacement: 'top' }
+  //     )
+  // }
 
 }
 
