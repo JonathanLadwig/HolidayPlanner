@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { deleteHoliday } from 'src/app/Ngrx-store/Ngrx-actions/holiday.actions';
-import { getHolidayTotalCost, selectAllActivitiesSortedByDate } from 'src/app/Ngrx-store/Ngrx-selectors/activity.selector';
+import { getHolidayTotalCost, selectAllActivitiesSortedByDateWithHolidayID } from 'src/app/Ngrx-store/Ngrx-selectors/activity.selector';
 import { IHoliday } from 'src/app/models/Trip';
 import { HolidayService } from 'src/app/services/holiday.service';
 import { AppState } from 'src/app/shared/app.state';
@@ -24,7 +24,7 @@ export class HolidayTabComponent implements OnInit {
 
   ngOnInit(): void {
     this.holidayService.setSelectedHoliday(this.holiday?.id || '');
-    this.store.select(selectAllActivitiesSortedByDate).subscribe((activities) => {
+    this.store.select(selectAllActivitiesSortedByDateWithHolidayID(this.holidayService.getSelectedHolidayID())).subscribe((activities) => {
       if (activities.length === 0) {
         this.startDate = new Date();
         this.endDate = new Date();
