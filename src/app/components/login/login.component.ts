@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { PERSISTENCE } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { loadActivities } from 'src/app/Ngrx-store/Ngrx-actions/activity.actions';
-import { loadHolidays } from 'src/app/Ngrx-store/Ngrx-actions/holiday.actions';
 import { AppState } from 'src/app/shared/app.state';
 import { AuthService } from 'src/app/shared/auth.service';
 
@@ -26,8 +24,8 @@ export class LoginComponent implements OnInit {
     this.auth.fireAuth.onAuthStateChanged(user => {
       if (user) {
         this.router.navigate(['landing']);
-        this.store.dispatch(loadActivities())
-        this.store.dispatch(loadHolidays())
+        // this.store.dispatch(loadActivities())
+        // this.store.dispatch(loadHolidays())
       }
     }
     );

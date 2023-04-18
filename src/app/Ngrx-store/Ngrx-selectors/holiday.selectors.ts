@@ -15,3 +15,9 @@ export const selectSpecificHoliday = (holidayID: string) => createSelector(
 )
 //gets the selected holiday id from the state
 export const getSelectedHolidayID = (state: HolidayState) => state.selectedHolidayID;
+
+//gets all holiday ids from the state
+export const getHolidayIDs = createSelector(
+  selectHolidayState,
+  (state: HolidayState) => state.holidays.map(holiday => holiday.id)
+)

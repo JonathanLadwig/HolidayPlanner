@@ -56,6 +56,8 @@ export const reducer = createReducer(
   }),
   //Load activities by holiday id case
   on(loadActivitiesByHolidayID, state => ({ ...state, status: 'loading' })),
+  //Load activities by user id case
+  // on(loadActivitiesByUserID, state => ({ ...state, status: 'loading' })),
   //Load activities case
   on(loadActivities, state => ({ ...state, status: 'loading' })),
   //Load activities success case

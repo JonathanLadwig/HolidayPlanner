@@ -107,20 +107,20 @@
     </div>
     <div *ngIf="isOpen" [@openClose]="isOpen ? 'open' : 'closed'">
         <div class="card-content px-2">
-            <p class="font-light">Description: {{activity?.description}}</p>
+            <p class="font-light pt-1">{{activity?.description}}</p>
             <div class="py-1"></div>
             <p>Tag: {{activity?.tag}}</p>
             <p>Price: {{(activity?.cost | currency : 'R')}}</p>
             <p>Starts At: {{getDate(activity?.startDateTime) | date: 'd MMM YYYY H:mma'}}</p>
             <p>Ends At: {{getDate(activity?.endDateTime) | date: 'd MMM YYYY H:mma'}}</p>
         </div>
-        <div class="card-buttons flex justify-evenly ">
-            <button aria-label="delete activity" class="my-2" nz-button nzType="default" nz-popconfirm
+        <div class="card-buttons flex">
+            <button aria-label="delete activity" class="" nz-button nzType="default" nz-popconfirm
                 nzPopconfirmTitle="Are you sure delete this activity?" nzPopconfirmPlacement="bottom"
                 (nzOnConfirm)="confirmDelete()" (nzOnCancel)="cancelDelete()">
                 Delete Activity
             </button>
-            <button aria-label="edit activity" class="my-2" nz-button nzType="default" (click)="editActivity()">
+            <button aria-label="edit activity" class="" nz-button nzType="default" (click)="editActivity()">
                 Update Activity
             </button>
         </div>

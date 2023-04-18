@@ -1,4 +1,3 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { Observable } from "rxjs";
@@ -15,7 +14,7 @@ export class ActivityService {
   selectedHolidayID = '1';
 
   //connects to firestore or http for json data
-  constructor(private afs: AngularFirestore, private http: HttpClient) {
+  constructor(private afs: AngularFirestore) {
   }
 
   setSelectedActivity(activity: IActivity) {
@@ -32,8 +31,14 @@ export class ActivityService {
 
   getActivitiesByHolidayID(holidayID: string): Observable<IActivity[]> {
     //get activities by holidayID and convert timestamp to date
-
     const activitiesByHoliday = this.afs.collection<IActivity>('activities', ref => ref.where('fkHolidayID', '==', holidayID));
+    return activitiesByHoliday.valueChanges();
+  }
+
+  getActivtiesByUsersHolidayIDs(holidayID: string[]): Observable<IActivity[]> {
+    // get activities for every holidayID in the array
+    console.log(`User's holidayIDs: ${holidayID}`);
+    const activitiesByHoliday = this.afs.collection<IActivity>('activities', ref => ref.where('fkHolidayID', 'in', holidayID));
     return activitiesByHoliday.valueChanges();
   }
 

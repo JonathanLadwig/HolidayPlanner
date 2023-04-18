@@ -11,6 +11,7 @@ import { AngularFireAuthModule, PERSISTENCE } from '@angular/fire/compat/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { NgIconsModule } from '@ng-icons/core';
 import * as material from '@ng-icons/material-icons/outline';
 import { EffectsModule } from '@ngrx/effects';
@@ -46,6 +47,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { EditActivityFormComponent } from './components/edit-activity-form/edit-activity-form.component';
 import { HolidayTabComponent } from './components/holiday-tab/holiday-tab.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
+import { LeafletMapComponent } from './components/leaflet-map/leaflet-map.component';
 import { LoginComponent } from './components/login/login.component';
 import { NewHolidayTabComponent } from './components/new-holiday-tab/new-holiday-tab.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -79,7 +81,8 @@ registerLocaleData(en);
     NewHolidayTabComponent,
     HolidayTabComponent,
     EditActivityFormComponent,
-    HomePageComponent
+    HomePageComponent,
+    LeafletMapComponent,
   ],
   imports: [
     BrowserModule,
@@ -93,6 +96,7 @@ registerLocaleData(en);
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    LeafletModule,
     NzButtonModule,
     NzFormModule,
     NzCalendarModule,

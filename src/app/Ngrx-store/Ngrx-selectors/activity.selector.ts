@@ -40,6 +40,15 @@ export const selectAllActivitiesSortedByDateWithHolidayID = (idHoliday: string) 
   }
 )
 
+export const selectAllActivitiesSortedByDateByUsersHolidayIDs = (holidayIDs: string[]) => createSelector(
+  selectAllActivitiesSortedByDate,
+  (activities: IActivity[]) => {
+    return activities.filter((activity: IActivity) => {
+      return (holidayIDs.includes(activity.fkHolidayID))
+    })
+  }
+)
+
 
 //get all activities with selected date
 export const selectAllActivitiesSortedByDateWithDate = (date: Date) => createSelector(
