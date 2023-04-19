@@ -1,6 +1,6 @@
 <div class="relative h-full">
     <nav class="h-12 w-full sticky top-0 left-0 flex justify-between items-center bg-primary z-10 text-white px-6">
-        <div class="">
+        <div *ngIf="router.url !== '/login'">
             <button class="" aria-label="go to landing page" (click)="goToLanding()">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
                     <path d="M0 0h24v24H0V0z" fill="none" />
@@ -16,7 +16,7 @@
             </button>
         </div>
         <h2 class="text-white">Holiday Planner</h2>
-        <button class="ml-8" aria-label="log out" (click)="logOut()">
+        <button class="ml-8" *ngIf="router.url !== '/login'" aria-label="log out" (click)="logOut()">
             <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24"
                 width="24px" fill="#FFFFFF">
                 <g>

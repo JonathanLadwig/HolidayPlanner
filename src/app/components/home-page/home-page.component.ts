@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { loadActivitiesByUserHolidayIDs } from 'src/app/Ngrx-store/Ngrx-actions/activity.actions';
@@ -16,7 +16,7 @@ import { AuthService } from 'src/app/shared/auth.service';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
-export class HomePageComponent {
+export class HomePageComponent implements OnInit {
   todaysActivities$: Observable<IActivity[]> | undefined;
   tomorrowsActivities$: Observable<IActivity[]> | undefined;
   allActivities$: Observable<IActivity[]> | undefined;
