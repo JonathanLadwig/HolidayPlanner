@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { IHoliday } from '../models/Trip';
-import { AuthService } from '../shared/auth.service';
 import { AuthGuard } from './auth.guard';
 
 @Injectable({
@@ -13,7 +11,7 @@ export class HolidayService {
 
   selectedHolidayID: string = '';
 
-  constructor(private afa: AngularFireAuth, private afs: AngularFirestore, private authService: AuthService, private guard: AuthGuard) { }
+  constructor(private afs: AngularFirestore, private guard: AuthGuard) { }
 
   getHolidays(): Observable<IHoliday[]> {
     const currentUserID = this.guard.getCurrentUserID();

@@ -1,4 +1,4 @@
-<div class="text-sm mx-2">{{getDate(activity?.startDateTime) | date: 'short'}}</div>
+<div class="text-sm mx-2 text-gray-500">{{getDate(activity?.startDateTime) | date: 'short'}}</div>
 <div class="activityCard w-full rounded-xl border-2" [ngClass]="activity?.tag | lowercase">
     <!-- Code for when closed -->
     <div *ngIf="!isOpen" aria-label="press to open"
@@ -101,26 +101,27 @@
                     d="M22 10V6c0-1.1-.9-2-2-2H4c-1.1 0-1.99.9-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2zm-2-1.46c-1.19.69-2 1.99-2 3.46s.81 2.77 2 3.46V18H4v-2.54c1.19-.69 2-1.99 2-3.46 0-1.48-.8-2.77-1.99-3.46L4 6h16v2.54zM9.07 16L12 14.12 14.93 16l-.89-3.36 2.69-2.2-3.47-.21L12 7l-1.27 3.22-3.47.21 2.69 2.2z" />
             </svg>
 
-            <h4>{{activity?.name}}</h4>
+            <h4 class="pl-1">{{activity?.name}}</h4>
         </div>
         <i nz-icon nzType="caret-up" nzTheme="outline" class="text-xl text-white"></i>
     </div>
     <div *ngIf="isOpen" [@openClose]="isOpen ? 'open' : 'closed'">
         <div class="card-content px-2">
-            <p class="font-light">Description: {{activity?.description}}</p>
+            <p class="font-light pt-1">{{activity?.description}}</p>
+            <div class="py-1"></div>
             <p>Tag: {{activity?.tag}}</p>
             <p>Price: {{(activity?.cost | currency : 'R')}}</p>
             <p>Starts At: {{getDate(activity?.startDateTime) | date: 'd MMM YYYY H:mma'}}</p>
             <p>Ends At: {{getDate(activity?.endDateTime) | date: 'd MMM YYYY H:mma'}}</p>
         </div>
-        <div class="card-buttons flex justify-evenly ">
-            <button aria-label="delete activity" class="my-2" nz-button nzType="default" nz-popconfirm
+        <div class="card-buttons flex justify-around my-2">
+            <button aria-label="delete activity" class="" nz-button nzType="default" nz-popconfirm
                 nzPopconfirmTitle="Are you sure delete this activity?" nzPopconfirmPlacement="bottom"
-                (nzOnConfirm)="confirmDelete()" (nzOnCancel)="cancelDelete()">
+                (nzOnConfirm)="confirmDelete()">
                 Delete Activity
             </button>
-            <button aria-label="edit activity" class="my-2" nz-button nzType="default" (click)="editActivity()">
-                Edit Activity
+            <button aria-label="edit activity" class="" nz-button nzType="default" (click)="editActivity()">
+                Update Activity
             </button>
         </div>
     </div>

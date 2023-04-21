@@ -41,9 +41,6 @@ export class ActivityCardComponent {
     this.isOpen = !this.isOpen;
   }
 
-  cancelDelete() {
-
-  }
   confirmDelete() {
     this.store.dispatch(deleteActivity({ idActivity: this.activity?.id || '' }));
     this.activityService.removeActivity(this.activity?.id || '');

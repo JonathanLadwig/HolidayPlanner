@@ -1,4 +1,4 @@
-<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+<form class="my-4 mx-8" nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
     <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="displayName">Display Name</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please enter your display name!">
@@ -18,8 +18,8 @@
             <input nz-input type="password" id="password" formControlName="password" minlength="10" />
             <ng-template #errorPwd let-control>
                 <ng-container *ngIf="control.hasError('required')">Please enter your password!</ng-container>
-                <ng-container *ngIf="control.hasError('pattern')">All you had to do was follow the damn tooltip
-                    CJ!</ng-container>
+                <ng-container *ngIf="control.hasError('pattern')">You don't have all the elements required for a secure
+                    password. Please read the tooltip again.</ng-container>
             </ng-template>
         </nz-form-control>
     </nz-form-item>
@@ -29,18 +29,13 @@
             <input nz-input type="password" formControlName="checkPassword" id="checkPassword" />
             <ng-template #errorTpl let-control>
                 <ng-container *ngIf="control.hasError('required')">Please confirm your password!</ng-container>
-                <ng-container *ngIf="control.hasError('confirm')">The two passwords are not the same!</ng-container>
+                <ng-container *ngIf="control.hasError('confirm')">The two passwords are not the same.</ng-container>
             </ng-template>
         </nz-form-control>
     </nz-form-item>
-    <nz-form-item nz-row class="register-area">
+    <nz-form-item nz-row class="register-around">
         <nz-form-control [nzSpan]="14" [nzOffset]="6">
             <button nz-button nzType="primary">Register</button>
         </nz-form-control>
     </nz-form-item>
 </form>
-
-<button nz-button nzType="primary" (click)="goBack()">
-    <span nz-icon nzType="left"></span>
-    Go back
-</button>

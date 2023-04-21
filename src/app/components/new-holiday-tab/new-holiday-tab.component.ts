@@ -48,6 +48,7 @@ export class NewHolidayTabComponent implements OnInit {
       }
       this.store.dispatch(addHoliday({ newHoliday }));
       this.holidayService.addHoliday(newHoliday);
+      this.validateHolidayForm.reset();
     }
     else {
       Object.values(this.validateHolidayForm.controls).forEach(control => {

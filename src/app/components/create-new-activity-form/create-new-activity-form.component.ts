@@ -3,6 +3,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from "@ngrx/store";
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { addActivity } from 'src/app/Ngrx-store/Ngrx-actions/activity.actions';
 import { ActivityService } from 'src/app/services/activity.service';
 import { CurrencyService } from 'src/app/services/currency.service';
@@ -22,10 +24,20 @@ export class CreateNewActivityFormComponent {
   chosenCurrency: string = 'ZAR';
   currencyOptions$ = this.currencyService.getSupportedCurrencies();
   currencies: string[] = [];
+  successful: boolean | undefined;
 
-  constructor(private fb: UntypedFormBuilder, private store: Store<AppState>, private readonly afs: AngularFirestore, private activityService: ActivityService, private holidayService: HolidayService, private router: Router, private currencyService: CurrencyService) {
+  constructor(private fb: UntypedFormBuilder,
+    private store: Store<AppState>,
+    private readonly afs: AngularFirestore,
+    private activityService: ActivityService,
+    private holidayService: HolidayService,
+    private router: Router,
+    private currencyService: CurrencyService,
+    private notification: NzNotificationService,
+    private message: NzMessageService) {
     this.currencyOptions$.subscribe(data => {
       this.currencies = Object.keys(data.symbols) as string[];
+      this.successful = false;
     })
   }
 
@@ -67,11 +79,13 @@ export class CreateNewActivityFormComponent {
           control.updateValueAndValidity({ onlySelf: true });
         }
       });
-      alert('Please fill in all required fields');
+      this.createErrorMessage();
+      this.successful = false;
     }
   }
 
   ngOnInit(): void {
+    this.successful = false;
     this.validateForm = this.fb.group({
       activityName: [null, Validators.required],
       activityDescription: [null],
@@ -89,15 +103,17 @@ export class CreateNewActivityFormComponent {
     this.validateForm.reset();
     this.store.dispatch(addActivity({ newActivity: activity }));
     this.activityService.addActivity(activity);
-  }
-
-  createAnother() {
-    this.submitForm();
-  }
-  goToDashboard() {
-    this.submitForm();
+    this.successful = true;
+    this.createSuccessMessage();
     this.router.navigate(['dashboard']);
   }
 
+  createSuccessMessage() {
+    this.message.create('success', "We added the activity to your holiday");
+  }
+
+  createErrorMessage() {
+    this.message.create('error', "Please fill in all required fields");
+  }
 }
 

@@ -19,20 +19,4 @@ export class CurrencyService {
     const requestURL = this.baseSupportedCurrenciesURL;
     return this.httpClient.get<ICurrencyAPIResponse>(requestURL);
   }
-
-  // getSupportedCurrencies(): Observable<ICurrencyAPIResponse> {
-  //   const requestURL = this.baseSupportedCurrenciesURL;
-  //   return new Observable<ICurrencyAPIResponse>(observer => {
-  //     axios.get(requestURL)
-  //       .then(response => {
-  //         console.log(response);
-  //         observer.next(response.data);
-  //         observer.complete();
-  //       })
-  //       .catch(error => {
-  //         console.log(error);
-  //         observer.error(error);
-  //       })
-  //   })
-  // }
 }

@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
-import { AuthGuard } from './services/auth.guard';
 import { AuthService } from './shared/auth.service';
 
 
@@ -13,11 +11,15 @@ import { AuthService } from './shared/auth.service';
 })
 export class AppComponent {
 
-  constructor(public authService: AuthService, private router: Router, private authGuard: AuthGuard, private afa: AngularFireAuth) {
+  constructor(public authService: AuthService, protected router: Router) {
   }
 
   goToDashboard() {
     this.router.navigate(['dashboard']);
+  }
+
+  goToLanding() {
+    this.router.navigate(['landing']);
   }
 
   goToCalendar() {

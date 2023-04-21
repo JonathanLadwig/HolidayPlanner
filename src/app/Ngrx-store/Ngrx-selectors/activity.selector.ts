@@ -10,6 +10,13 @@ export const selectActivityState = createFeatureSelector<ActivityState>(
 //gets all the activities from the state
 export const selectActivities = (state: ActivityState) => state.activities;
 
+export const getStatus = (state: ActivityState) => state.status;
+
+export const getLoadingStatus = createSelector(
+  selectActivityState,
+  (state: ActivityState) => state.status
+)
+
 //gets all the activities from the state and sorts them by date
 export const selectAllActivitiesSortedByDate = createSelector(
   selectActivityState,
@@ -22,7 +29,7 @@ export const selectAllActivitiesSortedByDate = createSelector(
           const timestampB = b.startDateTime as unknown as Timestamp
           const dateA = new Date(timestampA.seconds * 1000);
           const dateB = new Date(timestampB.seconds * 1000);
-          return (dateA.getDate() - dateB.getDate() || dateA.getTime() - dateB.getTime());
+          return (dateA.getFullYear() - dateB.getFullYear() || dateA.getMonth() - dateB.getMonth() || dateA.getDate() - dateB.getDate() || dateA.getTime() - dateB.getTime());
         }
         return 0
       })
@@ -34,6 +41,15 @@ export const selectAllActivitiesSortedByDateWithHolidayID = (idHoliday: string) 
   (activities: IActivity[]) => {
     return activities.filter((activity: IActivity) => {
       return (activity.fkHolidayID === idHoliday)
+    })
+  }
+)
+
+export const selectAllActivitiesSortedByDateByUsersHolidayIDs = (holidayIDs: string[]) => createSelector(
+  selectAllActivitiesSortedByDate,
+  (activities: IActivity[]) => {
+    return activities.filter((activity: IActivity) => {
+      return (holidayIDs.includes(activity.fkHolidayID))
     })
   }
 )

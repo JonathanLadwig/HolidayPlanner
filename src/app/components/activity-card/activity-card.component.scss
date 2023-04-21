@@ -1,36 +1,40 @@
 .travel {
   .coloured-top {
-    background-color: blue;
+    background-color: #345995;
   }
 }
 
 .hiking {
   .coloured-top {
-    background-color: green;
+    background-color: #34853f;
+    // 3fa34d shamrock (fails contrast)
   }
 }
 
 .food {
   .coloured-top {
-    background-color: hsl(0, 100%, 61%);
+    background-color: #bf3656;
+    // E40066 razzmatazz
+    // ef476f flamingo (fails contrast)
   }
 }
 
 .sightseeing {
   .coloured-top {
-    background-color: rgb(255, 128, 0);
+    background-color: #e05f19;
+    // f08700 tangerine (fails contrast)
   }
 }
 
 .shopping {
   .coloured-top {
-    background-color: purple;
+    background-color: #955da9;
   }
 }
 
 .other {
   .coloured-top {
-    background-color: black;
+    background-color: #555555;
   }
 }
 

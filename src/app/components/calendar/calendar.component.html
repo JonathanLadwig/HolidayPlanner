@@ -1,4 +1,4 @@
-<div class="calendar-component mx-4">
+<div class="calendar-component mx-4 mt-4">
     <div [ngStyle]="{ width: 'full', border: '1px solid #d9d9d9', borderRadius: '4px' }">
         <nz-calendar [nzFullscreen]="false" (nzSelectChange)="selectChange($event)"
             (nzPanelChange)="panelChange($event)"></nz-calendar>
@@ -9,21 +9,3 @@
         <app-activity-card [activity]="activity" />
     </div>
 </div>
-
-<!-- <nz-calendar [(ngModel)]="selectedDate" [(nzMode)]="mode" (nzSelectChange)="selectChange($event)"
-    (nzPanelChange)="panelChange($event)">
-
-    <ul *nzDateCell="let date" class="events">
-        <ng-container [ngSwitch]="date.getDate()">
-            <div *ngFor="let date of daysInMonth">
-                <ng-container *ngSwitchCase="daysInMonth">
-                    <li *ngFor="let item of listDataMap">
-                        <div *ngIf="getDateFromFS(item.startDateTime)">
-                            <nz-badge nzStatus="success" [nzText]="item.name"></nz-badge>
-                        </div>
-                    </li>
-                </ng-container>
-            </div>
-        </ng-container>
-    </ul>
-</nz-calendar> -->

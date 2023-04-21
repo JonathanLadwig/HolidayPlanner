@@ -11,10 +11,9 @@ import { AngularFireAuthModule, PERSISTENCE } from '@angular/fire/compat/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgIconsModule } from '@ng-icons/core';
-import * as material from '@ng-icons/material-icons/outline';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { EffectsModule } from '@ngrx/effects';
-import { ActionReducer, MetaReducer, StoreModule } from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -26,8 +25,10 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { environment } from '../environments/environment';
@@ -42,25 +43,14 @@ import { ActivityComponent } from './components/activity-list/activity.component
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { CreateNewActivityFormComponent } from './components/create-new-activity-form/create-new-activity-form.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { EditActivityFormComponent } from './components/edit-activity-form/edit-activity-form.component';
 import { HolidayTabComponent } from './components/holiday-tab/holiday-tab.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
+import { LeafletMapComponent } from './components/leaflet-map/leaflet-map.component';
 import { LoginComponent } from './components/login/login.component';
 import { NewHolidayTabComponent } from './components/new-holiday-tab/new-holiday-tab.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthService } from './shared/auth.service';
-import { EditActivityFormComponent } from './components/edit-activity-form/edit-activity-form.component';
-
-// rome-ignore lint/suspicious/noExplicitAny: <explanation>
-export const metaReducers: MetaReducer<any>[] = [debug];
-// rome-ignore lint/suspicious/noExplicitAny: <explanation>
-export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
-  return function (state, action) {
-    console.log(action.type, action);
-    console.log('current state', state)
-    console.log('future value of state', reducer(state, action));
-    // }
-    return reducer(state, action);
-  };
-}
 
 registerLocaleData(en);
 
@@ -76,13 +66,14 @@ registerLocaleData(en);
     ActivityComponent,
     NewHolidayTabComponent,
     HolidayTabComponent,
-    EditActivityFormComponent
+    EditActivityFormComponent,
+    HomePageComponent,
+    LeafletMapComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularFireAuthModule,
-    NgIconsModule.withIcons(material),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
@@ -90,6 +81,7 @@ registerLocaleData(en);
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    LeafletModule,
     NzButtonModule,
     NzFormModule,
     NzCalendarModule,
@@ -103,8 +95,10 @@ registerLocaleData(en);
     NzTabsModule,
     NzPopconfirmModule,
     NzMessageModule,
+    NzNotificationModule,
+    NzSpinModule,
+    StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
-    StoreModule.forRoot({}, { metaReducers }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     StoreModule.forFeature(fromHoliday.holidayFeatureKey, fromHoliday.reducer),
     StoreModule.forFeature(fromActivity.activityFeatureKey, fromActivity.reducer),

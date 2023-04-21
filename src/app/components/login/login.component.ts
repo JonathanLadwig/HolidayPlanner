@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PERSISTENCE } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/shared/app.state';
 import { AuthService } from 'src/app/shared/auth.service';
 
 
@@ -15,16 +17,10 @@ export class LoginComponent implements OnInit {
   email = '';
   password = '';
 
-  constructor(public auth: AuthService, public router: Router) { }
+  constructor(public auth: AuthService, public router: Router, private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    //fire if user is already logged in to send to dashboard automatically
-    this.auth.fireAuth.onAuthStateChanged(user => {
-      if (user) {
-        this.router.navigate(['dashboard']);
-      }
-    }
-    );
+    this.auth.checkIfLoggedIn();
   }
 
   login() {
@@ -41,12 +37,3 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['register']);
   }
 }
-
-    // this.auth.fireAuth.currentUser.then(user => {
-    //   console.log("firing now")
-    //   if (!user) {
-    //     console.log("already logged in");
-    //     this.router.navigate(['dashboard']);
-    //   }
-    // }
-    // );

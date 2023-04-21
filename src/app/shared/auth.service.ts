@@ -22,7 +22,7 @@ export class AuthService {
             this.fireAuth.setPersistence('local');
           }
         });
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['landing']);
       }, error => {
         alert(error.message);
       })
@@ -37,7 +37,7 @@ export class AuthService {
             displayName: displayName
           });
           this.fireAuth.setPersistence('local');
-          this.router.navigate(['dashboard']);
+          this.router.navigate(['landing']);
         });
       }, error => {
         alert(error.message);
@@ -47,6 +47,16 @@ export class AuthService {
   logout() {
     this.router.navigate(['login']);
     this.fireAuth.signOut();
+  }
+
+
+  checkIfLoggedIn() {
+    this.fireAuth.onAuthStateChanged(user => {
+      if (user) {
+        this.router.navigate(['landing']);
+      }
+    }
+    );
   }
 
 }

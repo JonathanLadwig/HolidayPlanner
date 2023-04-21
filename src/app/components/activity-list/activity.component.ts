@@ -15,7 +15,6 @@ import { IActivity } from "../../models/Trip";
   styleUrls: ['./activity.component.scss']
 })
 export class ActivityComponent implements OnInit {
-  // public allActivities$ = this.store.select(selectAllActivitiesSortedByDate);
   public allActivities$: Observable<IActivity[]>;
   public selectedActivity: IActivity = {} as IActivity;
 

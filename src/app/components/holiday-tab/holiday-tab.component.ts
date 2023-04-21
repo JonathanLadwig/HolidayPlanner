@@ -2,9 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { deleteHoliday } from 'src/app/Ngrx-store/Ngrx-actions/holiday.actions';
-import { getHolidayTotalCost, selectAllActivitiesSortedByDate } from 'src/app/Ngrx-store/Ngrx-selectors/activity.selector';
+import { getHolidayTotalCost, selectAllActivitiesSortedByDateWithHolidayID } from 'src/app/Ngrx-store/Ngrx-selectors/activity.selector';
 import { IHoliday } from 'src/app/models/Trip';
-import { CurrencyService } from 'src/app/services/currency.service';
 import { HolidayService } from 'src/app/services/holiday.service';
 import { AppState } from 'src/app/shared/app.state';
 import { getDateFromFS } from 'src/app/shared/getDateFromFirestoreDate';
@@ -20,11 +19,12 @@ export class HolidayTabComponent implements OnInit {
   @Input() holiday: IHoliday | undefined;
   totalCost: number | undefined;
 
-  constructor(private router: Router, private store: Store<AppState>, private holidayService: HolidayService, private currencyService: CurrencyService) {
+  constructor(private router: Router, private store: Store<AppState>, private holidayService: HolidayService) {
   }
 
   ngOnInit(): void {
-    this.store.select(selectAllActivitiesSortedByDate).subscribe((activities) => {
+    this.holidayService.setSelectedHoliday(this.holiday?.id || '');
+    this.store.select(selectAllActivitiesSortedByDateWithHolidayID(this.holidayService.getSelectedHolidayID())).subscribe((activities) => {
       if (activities.length === 0) {
         this.startDate = new Date();
         this.endDate = new Date();
@@ -37,15 +37,12 @@ export class HolidayTabComponent implements OnInit {
       this.totalCost = cost;
     }
     )
-    this.holidayService.setSelectedHoliday(this.holiday?.id || '');
   }
 
   openCalendar() {
     this.router.navigate(["calendar"]);
   }
 
-  cancelDelete() {
-  }
   confirmDelete() {
     this.store.dispatch(deleteHoliday({ idHoliday: this.holiday?.id || '' }));
     this.holidayService.deleteHoliday(this.holiday?.id || '');

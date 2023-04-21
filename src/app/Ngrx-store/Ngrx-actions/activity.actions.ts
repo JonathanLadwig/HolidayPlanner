@@ -16,6 +16,11 @@ export const updateActivity = createAction(
   props<{ idActivity: string }>()
 );
 
+export const loadActivitiesByUserHolidayIDs = createAction(
+  '[Activities] Load Activities By User ID',
+  props<{ idHolidays: string[] }>()
+);
+
 export const loadActivitiesByHolidayID = createAction(
   '[Activities] Load Activities By Holiday ID',
   props<{ idHoliday: string }>()
