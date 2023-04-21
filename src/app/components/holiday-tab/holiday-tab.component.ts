@@ -43,9 +43,6 @@ export class HolidayTabComponent implements OnInit {
     this.router.navigate(["calendar"]);
   }
 
-  cancelDelete() {
-  }
-
   confirmDelete() {
     this.store.dispatch(deleteHoliday({ idHoliday: this.holiday?.id || '' }));
     this.holidayService.deleteHoliday(this.holiday?.id || '');

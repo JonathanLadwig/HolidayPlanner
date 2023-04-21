@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { Store } from "@ngrx/store";
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { Observable } from 'rxjs';
 import { addActivity } from 'src/app/Ngrx-store/Ngrx-actions/activity.actions';
 import { ActivityService } from 'src/app/services/activity.service';
 import { CurrencyService } from 'src/app/services/currency.service';
@@ -40,15 +39,6 @@ export class CreateNewActivityFormComponent {
       this.currencies = Object.keys(data.symbols) as string[];
       this.successful = false;
     })
-  }
-
-  beforeConfirm(): Observable<boolean> {
-    return new Observable(observer => {
-      setTimeout(() => {
-        observer.next(true);
-        observer.complete();
-      }, 3000);
-    });
   }
 
   submitForm(): void {
@@ -89,7 +79,6 @@ export class CreateNewActivityFormComponent {
           control.updateValueAndValidity({ onlySelf: true });
         }
       });
-      // this.createErrorNotification();
       this.createErrorMessage();
       this.successful = false;
     }
@@ -115,7 +104,6 @@ export class CreateNewActivityFormComponent {
     this.store.dispatch(addActivity({ newActivity: activity }));
     this.activityService.addActivity(activity);
     this.successful = true;
-    // this.createSuccessNotification();
     this.createSuccessMessage();
     this.router.navigate(['dashboard']);
   }

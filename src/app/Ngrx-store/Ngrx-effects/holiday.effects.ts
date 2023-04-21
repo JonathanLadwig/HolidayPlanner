@@ -23,7 +23,6 @@ export class HolidayEffects {
               this.holidayService.getHolidays().pipe(
                 map((holidays: IHoliday[]) => HolidayActions.loadHolidaysSuccess({ holidays })),//end of map
                 catchError(error => {
-                  alert(`Hi, yeah we have problems...${error}`)
                   return of(HolidayActions.loadHolidaysFailure({ error }))
                 }
                 )//end of catch error

@@ -100,6 +100,7 @@ registerLocaleData(en);
     NzMessageModule,
     NzNotificationModule,
     NzSpinModule,
+    StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     StoreModule.forFeature(fromHoliday.holidayFeatureKey, fromHoliday.reducer),
