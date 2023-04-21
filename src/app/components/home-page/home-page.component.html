@@ -25,7 +25,4 @@
     <div *ngIf="(holidayStatus$ | async) === 'error'">
         <h3 class="text-lg">Error loading activities!!!</h3>
     </div>
-    <!-- Leaflet map -->
-    <!-- <app-leaflet-map class="map-container h-64 w-full" leaflet (leafletMapReady)="onMapReady($event)"
-        [activities]="(allActivities$ | async) || []" [inputMode]="false"></app-leaflet-map> -->
 </div>

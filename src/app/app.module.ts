@@ -12,8 +12,6 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { NgIconsModule } from '@ng-icons/core';
-import * as material from '@ng-icons/material-icons/outline';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -76,7 +74,6 @@ registerLocaleData(en);
     BrowserModule,
     AppRoutingModule,
     AngularFireAuthModule,
-    NgIconsModule.withIcons(material),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
