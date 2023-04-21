@@ -24,7 +24,6 @@ export class RegisterComponent implements OnInit {
 
   submitForm(): void {
     if (this.validateForm.valid) {
-      console.log('submit', this.validateForm.value);
       this.auth.register(this.validateForm.value.email, this.validateForm.value.password, this.validateForm.value.displayName);
     } else {
       Object.values(this.validateForm.controls).forEach(control => {

@@ -15,7 +15,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { NgIconsModule } from '@ng-icons/core';
 import * as material from '@ng-icons/material-icons/outline';
 import { EffectsModule } from '@ngrx/effects';
-import { ActionReducer, MetaReducer, StoreModule } from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -53,19 +53,6 @@ import { LoginComponent } from './components/login/login.component';
 import { NewHolidayTabComponent } from './components/new-holiday-tab/new-holiday-tab.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthService } from './shared/auth.service';
-
-// rome-ignore lint/suspicious/noExplicitAny: <explanation I don't know what comes out>
-export const metaReducers: MetaReducer<any>[] = [debug];
-// rome-ignore lint/suspicious/noExplicitAny: <explanation>
-export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
-  return function (state, action) {
-    console.log(action.type, action);
-    console.log('current state', state)
-    console.log('future value of state', reducer(state, action));
-    // }
-    return reducer(state, action);
-  };
-}
 
 registerLocaleData(en);
 
@@ -114,7 +101,6 @@ registerLocaleData(en);
     NzNotificationModule,
     NzSpinModule,
     EffectsModule.forRoot([]),
-    StoreModule.forRoot({}, { metaReducers }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     StoreModule.forFeature(fromHoliday.holidayFeatureKey, fromHoliday.reducer),
     StoreModule.forFeature(fromActivity.activityFeatureKey, fromActivity.reducer),

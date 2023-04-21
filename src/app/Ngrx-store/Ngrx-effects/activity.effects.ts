@@ -21,8 +21,7 @@ export class ActivityEffects {
               this.activityService.getActivtiesByUsersHolidayIDs(action.idHolidays).pipe(
                 map((activities: IActivity[]) => ActivityActions.loadActivitiesSuccess({ activities })),//end of map
                 catchError(error => {
-                  //this is where I'm going to fire off cool ng-zorro alert thingy from the service
-                  console.log("Hi, yeah we have problems...")
+                  alert(`Hi, yeah we have problems...${error}`)
                   return of(ActivityActions.loadActivitiesFailure({ error }))
                 }
                 )//end of catch error
@@ -41,8 +40,7 @@ export class ActivityEffects {
               this.activityService.getActivitiesByHolidayID(action.idHoliday).pipe(
                 map((activities: IActivity[]) => ActivityActions.loadActivitiesSuccess({ activities })),//end of map
                 catchError(error => {
-                  //this is where I'm going to fire off cool ng-zorro alert thingy from the service
-                  console.log("Hi, yeah we have problems...")
+                  alert(`Hi, yeah we have problems...${error}`)
                   return of(ActivityActions.loadActivitiesFailure({ error }))
                 }
                 )//end of catch error

@@ -37,7 +37,6 @@ export class ActivityService {
 
   getActivtiesByUsersHolidayIDs(holidayID: string[]): Observable<IActivity[]> {
     // get activities for every holidayID in the array
-    console.log(`User's holidayIDs: ${holidayID}`);
     const activitiesByHoliday = this.afs.collection<IActivity>('activities', ref => ref.where('fkHolidayID', 'in', holidayID));
     return activitiesByHoliday.valueChanges();
   }
