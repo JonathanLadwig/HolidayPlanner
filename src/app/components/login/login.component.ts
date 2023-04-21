@@ -21,15 +21,6 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.auth.checkIfLoggedIn();
-    // //fire if user is already logged in to send to landing automatically
-    // this.auth.fireAuth.onAuthStateChanged(user => {
-    //   if (user) {
-    //     this.router.navigate(['landing']);
-    //     // this.store.dispatch(loadActivities())
-    //     // this.store.dispatch(loadHolidays())
-    //   }
-    // }
-    // );
   }
 
   login() {

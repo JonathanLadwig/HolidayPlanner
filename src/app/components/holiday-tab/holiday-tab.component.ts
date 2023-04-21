@@ -37,7 +37,6 @@ export class HolidayTabComponent implements OnInit {
       this.totalCost = cost;
     }
     )
-    // this.holidayService.setSelectedHoliday(this.holiday?.id || '');
   }
 
   openCalendar() {

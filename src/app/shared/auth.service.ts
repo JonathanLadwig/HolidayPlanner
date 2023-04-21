@@ -23,8 +23,6 @@ export class AuthService {
           }
         });
         this.router.navigate(['landing']);
-        // this.store.dispatch(loadActivities())
-        // this.store.dispatch(loadHolidays())
       }, error => {
         alert(error.message);
       })
@@ -40,8 +38,6 @@ export class AuthService {
           });
           this.fireAuth.setPersistence('local');
           this.router.navigate(['landing']);
-          // this.store.dispatch(loadActivities())
-          // this.store.dispatch(loadHolidays())
         });
       }, error => {
         alert(error.message);

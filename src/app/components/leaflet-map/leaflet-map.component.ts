@@ -11,7 +11,6 @@ export class LeafletMapComponent {
   @Input() inputMode: boolean = false;
   @Input() doubleLocations: boolean = false;
   @Input() activities: IActivity[] = [];
-  // @Output() map$: EventEmitter<L.Map> = new EventEmitter;
   @Output() startLocation: ILatLong | undefined;
   @Output() endLocation: ILatLong | undefined;
 
@@ -44,7 +43,6 @@ export class LeafletMapComponent {
 
   onMapReady(map: L.Map) {
     this.map = map;
-    // this.map$.emit(map);
     this.zoom = map.getZoom();
   }
 

@@ -127,24 +127,5 @@ export class CreateNewActivityFormComponent {
   createErrorMessage() {
     this.message.create('error', "Please fill in all required fields");
   }
-
-  // createSuccessNotification(): void {
-  //   this.notification
-  //     .blank(
-  //       'SUCCESS',
-  //       'We added the activity to your holiday!',
-  //       { nzDuration: 3000, nzPlacement: 'top' }
-  //     )
-  // }
-
-  // createErrorNotification(): void {
-  //   this.notification
-  //     .blank(
-  //       'FAILURE',
-  //       'Please fill in all required fields!',
-  //       { nzDuration: 3000, nzPlacement: 'top' }
-  //     )
-  // }
-
 }
 
